@@ -188,7 +188,7 @@
               <a href="{{ route('transactions.index') }}" class="nav-link">
                 <i class="fa fa-circle nav-icon text-danger"></i>
                 <p>
-                  Granted
+                  Granted x
                 </p>
               </a>
             </li>
