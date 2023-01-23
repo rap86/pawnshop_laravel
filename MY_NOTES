@@ -1,0 +1,2 @@
+Install MPDF: 
+composer require mpdf/mpdf v8.* --with-all-dependencies --ignore-platform-req=ext-gd

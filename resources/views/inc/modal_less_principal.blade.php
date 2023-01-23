@@ -1,0 +1,54 @@
+<div class="modal fade less-principal-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form action="{{ route('transaction_payments.store') }}" method="POST">
+            @csrf
+            <input type="hidden" class="form-control" name="transaction_id" value="{{ $transaction_id }}">
+            <input type="hidden" class="form-control" name="status" value="granted">
+            <input type="hidden" class="form-control" name="paid" value="no">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Less principal</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3 label-align">Principal</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="ptnumber" autocomplete="off" value="{{ $net_amount }}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3 label-align">Less Amount</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="ptnumber" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3 label-align">Remaining</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="ptnumber" autocomplete="off"readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3 label-align">Date</label>
+                        <div class="col-md-9">
+                            <input type="date" class="form-control" name="payment_startdate" autocomplete="off" value="{{ date('Y-m-d') }}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </button>
+                    <div type="button" class="btn btn-primary" id="btnConfirmationForNewRecord">
+                        <i class="fa fa-save"></i>
+                        Save
+                    </div>
+                </div>
+            </div>  
+        </form>
+    </div>
+</div>
