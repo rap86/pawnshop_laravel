@@ -8,7 +8,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Payment</h4>
+                    <h4 class="modal-title" id="myModalLabel">Payment {{ date('Y-m-d H:i:s') }}</h4>
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                     </button>
                 </div>

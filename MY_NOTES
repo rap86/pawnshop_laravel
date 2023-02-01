@@ -1,2 +1,16 @@
 Install MPDF: 
 composer require mpdf/mpdf v8.* --with-all-dependencies --ignore-platform-req=ext-gd
+
+----------
+For Laravel to get the current date.
+
+env file:
+APP_TIMEZONE="Asia/Manila"
+
+'timezone' => 'UTC',
+
+to 
+
+'timezone' => env('APP_TIMEZONE', 'UTC'),
+
+----------
