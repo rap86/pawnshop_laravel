@@ -24,7 +24,11 @@
                 </td>
                 <td>{{ date('M j, Y',strtotime($value->created_at)) }}</td>
                 <td>{{ date('M j, Y',strtotime($value->transaction_payments[ count($value->transaction_payments) -1 ]->payment_startdate)) }}</td>
-                <td>{{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->diff_days }}</td>
+                <td>
+                    Y{{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->diff_days['date']['year'] }}
+                    M{{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->diff_days['date']['month'] }}
+                    D{{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->diff_days['date']['day'] }}
+                </td>
                 <td>{{ $value->item->name }}</td>
                 <td>{{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->ptnumber }}</td>
                 <td>

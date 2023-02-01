@@ -50,17 +50,21 @@ class TransactionsController extends Controller
         ->where($where)
         ->get();
 
-        //dd($transactions);
+       // dd($transactions);
         /** 
          *  The day is already given.
          *  The value of $valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days is days from query on the top
          *  Now, we replaced the days value of 'Y'.$years.'-M'.$months.'-D'.$days;
          */
+        return $transactions = $this->formatDateDiff($transactions);
+    }
 
+    public function formatDateDiff($transactions) {
+        
         foreach ($transactions as $keyT => $valueT) {
 
-            if(isset($valueT->transaction_payments[0])) {
-
+            if(!empty($valueT->transaction_payments[ count($valueT->transaction_payments) - 1])) {
+               
                 $valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days = $this->convertToYearMonthDay($valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days);
             }
         }
@@ -107,7 +111,13 @@ class TransactionsController extends Controller
         $years  = floor($sum / 365);
         $months = floor(($sum - ($years * 365))/30.5);
         $days   = floor($sum - ($years * 365) - ($months * 30.5));
-        return 'Y'.$years.'-M'.$months.'-D'.$days;
+
+        $dateDiff['date']['year'] = $years;
+        $dateDiff['date']['month'] = $months;
+        $dateDiff['date']['day'] = $days;
+
+        return $dateDiff;
+        //return 'Y'.$years.'-M'.$months.'-D'.$days;
     }
 
 
@@ -188,7 +198,29 @@ class TransactionsController extends Controller
         $transactions = Transaction::with([
 			'transaction_items',
             'transaction_payments' => function($query) {
-                $query->select('transaction_payments.*')->with([
+                $query->select([
+                    'transaction_payments.id',
+                    'transaction_payments.transaction_id',
+                    'transaction_payments.ptnumber',
+                    'transaction_payments.prefix',
+                    'transaction_payments.payment_startdate',
+                    'transaction_payments.add_charge_amount',
+                    'transaction_payments.less_charge_amount',
+                    'transaction_payments.less_partial_amount',
+                    'transaction_payments.add_principal_amount',
+                    'transaction_payments.percent_interest',
+                    'transaction_payments.add_percent_amount',
+                    'transaction_payments.add_service_charge',
+                    'transaction_payments.total_amount',
+                    'transaction_payments.payment_enddate',
+                    'transaction_payments.status',
+                    'transaction_payments.paid',
+                    'transaction_payments.details',
+                    'transaction_payments.ornumber',
+                    'transaction_payments.created_at',
+                    'transaction_payments.updated_at',
+                    DB::raw("DATEDIFF(now(), transaction_payments.payment_startdate)AS diff_days")
+                    ])->with([
 
                     'ptnumber_logs' => function($query) {
                         $query->select('ptnumber_logs.*');
@@ -215,8 +247,8 @@ class TransactionsController extends Controller
 		])
 		->where('id', $id)
 		->get();
-        
-       //dd($transactions);
+
+        $transactions = $this->formatDateDiff($transactions);
         return view('transactions.show', [
             'transactions' => $transactions[0]
         ]);

@@ -206,7 +206,13 @@
                                                                 {{ $valuePayments->ptnumber }}
                                                             @endif
                                                         </td>
-                                                        <td>{{ date('M j, Y',strtotime($valuePayments->payment_startdate)) }}</td>
+                                                        <td>{{ date('M j, Y',strtotime($valuePayments->payment_startdate)) }}
+                                                            
+                                                             Y{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['year'] }}
+                                                             M{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['month'] }}
+                                                             D{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['day'] }}
+                                                             
+                                                        </td>
                                                         <td>
                                                             @if($valuePayments->percent_interest != false)
                                                                 {{ $valuePayments->percent_interest }}
