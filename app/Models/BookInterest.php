@@ -11,4 +11,8 @@ class BookInterest extends Model
 
     protected $table = 'book_interests';
     protected $guarded = [];
+
+    public function book() {
+        return $this->belongsTo(Book::class);
+    }
 }

@@ -15,7 +15,14 @@ class BookInterestsController extends Controller
      */
     public function index()
     {
-        $book_interests = BookInterest::all();
+        $book_interests = BookInterest::with([
+            'book'=>function($query) {
+                $query->select([
+                    'books.*'
+                ]);
+            }
+        ])->get();
+        
         return view('book_interests.index')->with('book_interests', $book_interests);
     }
 

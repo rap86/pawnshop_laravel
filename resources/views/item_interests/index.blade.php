@@ -7,18 +7,18 @@
             <div class="card-header">
                 <a href="{{ route('book_interests.create') }}" class="btn btn-secondary">
                     <i class="fa fa-plus"></i>
-                    Add Book Interest
+                    Add Item Interest
                 </a>
             </div>
             <div class="card-body">
-                @if(count($book_interests) > 0) 
+                @if(count($item_interests) > 0) 
                     <div class="table-responsive">
                         <table id="" class="dataTables table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Book Id</th>
-                                    <th>Book Name</th>
+                                    <th>Item Id</th>
+                                    <th>Item Name</th>
                                     <th>Month</th>
                                     <th>Interest</th>
                                     <th>Details</th>
@@ -27,20 +27,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($book_interests as $bookInterest)
+                                @foreach ($item_interests as $itemInterest)
                                     <tr>
-                                        <td>{{ $bookInterest->id }}</td>
-                                        <td>{{ $bookInterest->book_id }}</td>
-                                        <td>{{ $bookInterest->book->name }}</td>
-                                        <td>{{ $bookInterest->month }}</td>
-                                        <td>{{ $bookInterest->percent_interest }}</td>
-                                        <td>{{ $bookInterest->details }}</td>
+                                        <td>{{ $itemInterest->id }}</td>
+                                        <td>{{ $itemInterest->item_id }}</td>
+                                        <td>{{ $itemInterest->item->name }}</td>
+                                        <td>{{ $itemInterest->month }}</td>
+                                        <td>{{ $itemInterest->percent_interest }}</td>
+                                        <td>{{ $itemInterest->details }}</td>
                                         <td>
-                                            <a href="{{ route('book_interests.show', $bookInterest->id) }}" class="btn btn-secondary"><i class="fa fa-eye"> </i> View </a>
-                                            <a href="{{ route('book_interests.edit', $bookInterest->id) }}" class="btn btn-secondary"><i class="fa fa-edit"> </i> Edit </a>
+                                            <a href="{{ route('item_interests.show', $itemInterest->id) }}" class="btn btn-secondary"><i class="fa fa-eye"> </i> View </a>
+                                            <a href="{{ route('item_interests.edit', $itemInterest->id) }}" class="btn btn-secondary"><i class="fa fa-edit"> </i> Edit </a>
                                         </td>
                                         <td>
-                                            <form method="POST" action="{{ route('book_interests.destroy', $bookInterest->id) }}">
+                                            <form method="POST" action="{{ route('item_interests.destroy', $itemInterest->id) }}">
                                                 @csrf
                                                 <input type="hidden" name="_method" value="DELETE" />
                                                 <div class="btn btn-secondary" id="btnConfirmationForNewRecord" data-text-message="delete">

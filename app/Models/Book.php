@@ -12,4 +12,7 @@ class Book extends Model
     protected $table = 'books';
     protected $guarded = [];
 
+    public function book_interests() {
+        return $this->hasMany(BookInterests::class);
+    }
 }

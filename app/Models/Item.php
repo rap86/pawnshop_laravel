@@ -12,6 +12,10 @@ class Item extends Model
     protected $guarded = [];
 
     public function transactions() {
-       return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function item_interests() {
+        return $this->hasMany(IntemInterest::class);
     }
 }

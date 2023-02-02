@@ -10,7 +10,7 @@
 						<i class="fa fa-plus"></i>
 						Add item
 					</a>
-					<a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+					<a href="{{ route('item_interests.create')}}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
 						<i class="fa fa-plus"></i> 
 						Add item interest
 					</a>
