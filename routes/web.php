@@ -13,7 +13,7 @@ use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TransactionPaymentsController;
 use App\Http\Controllers\PtnumberLogsController;
 use App\Http\Controllers\PrintsController;
-
+use App\Http\Controllers\ReportsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,10 +41,9 @@ Route::resource('/ptnumber_logs', PtnumberLogsController::class);
 
 Route::get('/transactions/mergerecord', [TransactionsController::class, 'mergerecord']);
 Route::get('/dashboard', [TransactionsController::class, 'dashboard'])->name('transactions.dashboard');
+Route::get('/transactions/granted', [TransactionsController::class, 'granted'])->name('transactions.granted');
 Route::get('/transactions/underauction', [TransactionsController::class, 'underauction'])->name('transactions.underauction');
 Route::get('/transactions/outside', [TransactionsController::class, 'outside'])->name('transactions.outside');
-Route::get('/transactions/granted', [TransactionsController::class, 'granted'])->name('transactions.granted');
-Route::get('/transactions/collected', [TransactionsController::class, 'collected'])->name('transactions.collected');
 Route::get('/transactions/create/{id}', [TransactionsController::class, 'create']);
 Route::resource('/transactions', TransactionsController::class);
 
@@ -63,6 +62,9 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/download_database', [App\Http\Controllers\HomeController::class, 'download_database'])->name('home.download_database');
 Route::get('/dbdownload', [App\Http\Controllers\HomeController::class, 'dbdownload'])->name('home.dbdownload');
+
+Route::get('/reports/report_granted', [ReportsController::class, 'report_granted'])->name('reports.report_granted');
+Route::get('/reports/report_collected', [ReportsController::class, 'report_collected'])->name('reports.report_collected');
 
 Route::get('/print_customer_log', [PrintsController::class, 'print_customer_log'])->name('prints.print_customer_log');
 Route::get('/print_granted/{book_id}/{status}/{date_from}/{date_to}', [PrintsController::class, 'print_granted'])->name('prints.print_granted');

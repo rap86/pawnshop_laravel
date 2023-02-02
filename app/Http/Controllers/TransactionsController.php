@@ -14,7 +14,33 @@ use Illuminate\Support\Facades\Auth;
 class TransactionsController extends Controller
 {
 
-    public function grantedUaInUaOut($status)
+    public function convertToYearMonthDay($sum) {
+        $years  = floor($sum / 365);
+        $months = floor(($sum - ($years * 365))/30.5);
+        $days   = floor($sum - ($years * 365) - ($months * 30.5));
+
+        $dateDiff['date']['year'] = $years;
+        $dateDiff['date']['month'] = $months;
+        $dateDiff['date']['day'] = $days;
+
+        return $dateDiff;
+        //return 'Y'.$years.'-M'.$months.'-D'.$days;
+    }
+
+    public function formatDateDiff($transactions) {
+        
+        foreach ($transactions as $keyT => $valueT) {
+
+            if(!empty($valueT->transaction_payments[ count($valueT->transaction_payments) - 1])) {
+            
+                $valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days = $this->convertToYearMonthDay($valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days);
+            }
+        }
+
+        return $transactions;
+    }
+
+    public function grantedUaOutside($status)
     {
         $where[] = ['status', '=', $status ];
         $where[] = ['branch_id', '=', 1 ];
@@ -51,25 +77,8 @@ class TransactionsController extends Controller
         ->get();
 
        // dd($transactions);
-        /** 
-         *  The day is already given.
-         *  The value of $valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days is days from query on the top
-         *  Now, we replaced the days value of 'Y'.$years.'-M'.$months.'-D'.$days;
-         */
+
         return $transactions = $this->formatDateDiff($transactions);
-    }
-
-    public function formatDateDiff($transactions) {
-        
-        foreach ($transactions as $keyT => $valueT) {
-
-            if(!empty($valueT->transaction_payments[ count($valueT->transaction_payments) - 1])) {
-               
-                $valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days = $this->convertToYearMonthDay($valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days);
-            }
-        }
-
-        return $transactions;
     }
 
     /**
@@ -77,11 +86,11 @@ class TransactionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function granted()
     {
-        $transactions = $this->grantedUaInUaOut('granted');
+        $transactions = $this->grantedUaOutside('granted');
 
-        return view('transactions.index')->with([
+        return view('transactions.granted')->with([
             'transactions' => $transactions,
             'nopttab' => 'visible'
         ]);
@@ -89,9 +98,9 @@ class TransactionsController extends Controller
 
     public function underauction()
     {
-        $transactions = $this->grantedUaInUaOut('uain');
+        $transactions = $this->grantedUaOutside('uain');
 
-        return view('transactions.index')->with([
+        return view('transactions.granted')->with([
             'transactions' => $transactions,
             'nopttab' => 'notvisible'
         ]);
@@ -99,28 +108,13 @@ class TransactionsController extends Controller
 
     public function outside()
     {
-        $transactions = $this->grantedUaInUaOut('uaout');
+        $transactions = $this->grantedUaOutside('uaout');
 
-        return view('transactions.index')->with([
+        return view('transactions.granted')->with([
             'transactions' => $transactions,
             'nopttab' => 'notvisible'
         ]);
     }
-
-    public function convertToYearMonthDay($sum) {
-        $years  = floor($sum / 365);
-        $months = floor(($sum - ($years * 365))/30.5);
-        $days   = floor($sum - ($years * 365) - ($months * 30.5));
-
-        $dateDiff['date']['year'] = $years;
-        $dateDiff['date']['month'] = $months;
-        $dateDiff['date']['day'] = $days;
-
-        return $dateDiff;
-        //return 'Y'.$years.'-M'.$months.'-D'.$days;
-    }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -288,162 +282,6 @@ class TransactionsController extends Controller
         $transaction = Transaction::find($id);
         $transaction->delete();
         return redirect()->route('transactions.index')->with('flash_success', 'Transaction Deleted!');
-    }
-
-    public function granted(Request $request) {
-        
-        if(!empty($request->input('book_id'))  && !empty($request->input('status')) && !empty($request->input('date_from')) && !empty($request->input('date_to')) ) {
-            
-            $book_id = $request->input('book_id');
-            $status = $request->input('status');
-            $date_from = $request->input('date_from');
-            $date_to = $request->input('date_to');
-
-            $transactions = Transaction::with([
-                'transaction_items',
-                'transaction_payments' => function($query) {
-                    $query->select([
-                        'transaction_payments.id',
-                        'transaction_payments.transaction_id',
-                        'transaction_payments.ptnumber',
-                        'transaction_payments.payment_startdate',
-                        DB::raw("DATEDIFF(now(), transaction_payments.payment_startdate)AS diff_days")
-                    ]);
-                },
-                'customer'=>function($query) {
-                    $query->select([
-                        'customers.id',
-                        'customers.first_name',
-                        'customers.middle_name',
-                        'customers.last_name'
-                    ]);
-                },
-                'item'=>function($query) {
-                    $query->select([
-                            'items.*'
-                    ]);
-                }
-            ])
-            ->select([
-                'transactions.*'
-            ])
-            ->where('book_id', '=', $book_id)
-            ->where('status', '=', $status)
-            ->whereDate('created_at', '>=', $date_from)
-            ->whereDate('created_at', '<=', $date_to)
-			->get();
-    
-            // dd($transactions);
-
-            return view('transactions.granted', [
-                'transactions' => $transactions,
-                'book_id' => $book_id,
-                'status' => $status,
-                'date_from' => $date_from,
-                'date_to' => $date_to,
-            ]);
-
-        } else {
-            return view('transactions.granted');
-        }   
-    }
-
-    public function grantedDuplicate(Request $request) {
-        
-        if(!empty($request->input('date_from'))  && !empty($request->input('date_to')) && !empty($request->input('book_id'))) {
-            
-            $date_from = $request->input('date_from');
-			$date_to = $request->input('date_to');
-            $book_id = $request->input('book_id');
-            $status = $request->input('status');
-
-            $transactions = Transaction::with([
-                'transaction_items',
-                'transaction_payments' => function($query) {
-                    $query->select([
-                        'transaction_payments.id',
-                        'transaction_payments.transaction_id',
-                        'transaction_payments.ptnumber',
-                        'transaction_payments.payment_startdate',
-                        DB::raw("DATEDIFF(now(), transaction_payments.payment_startdate)AS diff_days")
-                    ]);
-                },
-                'customer'=>function($query) {
-                    $query->select([
-                        'customers.id',
-                        'customers.first_name',
-                        'customers.middle_name',
-                        'customers.last_name'
-                    ]);
-                },
-                'item'=>function($query) {
-                    $query->select([
-                            'items.*'
-                    ]);
-                }
-            ])
-            ->select([
-                'transactions.*'
-            ])
-            ->where('status', '=', 'granted')
-            ->where('book_id', '=', $book_id)
-			->whereDate('created_at', '>=', $date_from)
-			->whereDate('created_at', '<=', $date_to)
-			->get();
-    
-            // dd($transactions);
-
-            return view('transactions.granted', [
-                'transactions' => $transactions,
-                'date_from' => $request->input('date_from'),
-                'date_to' => $request->input('date_to'),
-                'book_id' => $request->input('book_id')
-            ]);
-
-        } else {
-            return view('transactions.granted', [
-                'date_from' => date('Y-m-d'),
-                'date_to' => date('Y-m-d')
-            ]);
-        }   
-    }
-
-    public function collected(Request $request) {
-    
-        if(!empty($request->input('status')) && !empty($request->input('book_id'))) {
-            
-            $where[] = ['status', '=', $request->input('status')];
-            $where[] = ['book_id', '=', $request->input('book_id')];
-
-            $from = $request->input('date_from');
-			$to = $request->input('date_to');
-
-
-            $transactions = Transaction::with([
-                'customer'=>function($query) {
-                    $query->select([
-                            'customers.*'
-                    ]);
-                },
-                'item'=>function($query) {
-                    $query->select([
-                            'items.*'
-                    ]);
-                }
-            ])
-            ->where($where)
-            ->get();
-    
-            //dd($transactions);
-            return view('transactions.collected', [
-                'transactions' => $transactions,
-                'status' => $request->input('status'),
-                'book_id' => $request->input('book_id')
-            ]);
-
-        } else {
-            return view('transactions.collected');
-        }   
     }
 
     public function dashboard()

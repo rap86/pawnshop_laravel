@@ -185,7 +185,7 @@
             <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="{{ route('transactions.index') }}" class="nav-link">
+              <a href="{{ route('transactions.granted') }}" class="nav-link">
                 <i class="fa fa-circle nav-icon text-danger"></i>
                 <p>
                   Granted
@@ -218,15 +218,15 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{ route('transactions.collected') }}" class="nav-link">
+                  <a href="{{ route('reports.report_collected') }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Collected</p>
+                    <p>Report Collected</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ route('transactions.granted') }}" class="nav-link">
+                  <a href="{{ route('reports.report_granted') }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Granted</p>
+                    <p>Report Granted</p>
                   </a>
                 </li>
               </ul>

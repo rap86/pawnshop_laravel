@@ -5,7 +5,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-lg-12">
-                <form action="{{ route('transactions.collected') }}" method="GET">
+                <form action="{{ route('reports.report_collected') }}" method="GET">
                     <div class="row">
 
                         <div class='col-sm-3'>
