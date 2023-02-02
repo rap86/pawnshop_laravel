@@ -14,6 +14,8 @@ use App\Http\Controllers\TransactionPaymentsController;
 use App\Http\Controllers\PtnumberLogsController;
 use App\Http\Controllers\PrintsController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ComputationsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

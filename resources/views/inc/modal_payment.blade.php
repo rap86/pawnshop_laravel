@@ -8,7 +8,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Payment {{ date('Y-m-d H:i:s') }}</h4>
+                    <h4 class="modal-title" id="myModalLabel">Payment | Id: {{ $id }} | Date: {{ date('Y-m-d H:i:s') }}</h4>
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -19,7 +19,7 @@
                             <div class="form-group">
                                 <label>Status</label>
                                 <div class="col-md-12">
-                                    <select class="form-control" name="status" id="statusInputSelectPayment" style="font-size:65px; height:85px;">
+                                    <select class="form-control statusInputSelectPayment" name="status" style="font-size:65px; height:85px;">
                                         <option></option>
                                         <option value="renewed">Renew</option>
                                         <option value="redeemed">Tubos</option>
@@ -32,7 +32,7 @@
                                     <span class="text-danger">Less Charge</span>
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="less_charge_amount" autocomplete="off" id="less_charge_amount">
+                                    <input type="text" class="form-control less_charge_amount" name="less_charge_amount" autocomplete="off">
                                 </div>
                             </div>
                             
@@ -41,7 +41,7 @@
                                     <span class="text-danger">Partial Amount</span>
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="less_partial_amount" autocomplete="off" id="less_partial_amount">
+                                    <input type="text" class="form-control less_partial_amount" name="less_partial_amount" autocomplete="off">
                                 </div>
                             </div>
 						</div>
@@ -59,7 +59,7 @@
                                     <span class="text-success">Percent Amount</span>
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="add_percent_amount" autocomplete="off" id="add_percent_amount" readonly>
+                                    <input type="text" class="form-control add_percent_amount" name="add_percent_amount" autocomplete="off" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -67,15 +67,15 @@
                                     <span class="text-success">Add Charge</span>
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="add_charge_amount" autocomplete="off" id="add_charge_amount">
+                                    <input type="text" class="form-control add_charge_amount" name="add_charge_amount" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="form-group row" id="div_add_principal_amount" style="display:none;">
+                            <div class="form-group row div_add_principal_amount" style="display:none;">
                                 <label class="col-form-label col-md-5 text-danger label-align">
                                     <span class="text-success">Principal Amount</span>
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="add_principal_amount" value="{{ $net_amount }}" id="add_principal_amount" readonly>
+                                    <input type="text" class="form-control add_principal_amount" name="add_principal_amount" value="{{ $net_amount }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -83,7 +83,7 @@
                                     <span class="text-success">Service Charge</span>
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="add_service_charge" autocomplete="off" id="add_service_charge" readonly>
+                                    <input type="text" class="form-control add_service_charge" name="add_service_charge" autocomplete="off" readonly>
                                 </div>
                             </div>
         
@@ -92,7 +92,7 @@
                                     <span class="text-success">Total Amount</span>
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="total_amount" autocomplete="off" id="total_amount" readonly>
+                                    <input type="text" class="form-control total_amount" name="total_amount" autocomplete="off" readonly>
                                 </div>
                             </div>
 						</div>

@@ -14,17 +14,12 @@ use Illuminate\Support\Facades\Auth;
 class TransactionsController extends Controller
 {
 
-    public function convertToYearMonthDay($sum) {
-        $years  = floor($sum / 365);
-        $months = floor(($sum - ($years * 365))/30.5);
-        $days   = floor($sum - ($years * 365) - ($months * 30.5));
+    public function callDiffDateConvertion($dataConvertInDiffDates) {
 
-        $dateDiff['date']['year'] = $years;
-        $dateDiff['date']['month'] = $months;
-        $dateDiff['date']['day'] = $days;
-
-        return $dateDiff;
-        //return 'Y'.$years.'-M'.$months.'-D'.$days;
+        $computations = new ComputationsController();
+        $resultDiffDatesConvertion = $computations->convertToYearMonthDay($dataConvertInDiffDates);
+        return $resultDiffDatesConvertion;
+   
     }
 
     public function formatDateDiff($transactions) {
@@ -33,7 +28,7 @@ class TransactionsController extends Controller
 
             if(!empty($valueT->transaction_payments[ count($valueT->transaction_payments) - 1])) {
             
-                $valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days = $this->convertToYearMonthDay($valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days);
+                $valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days = $this->callDiffDateConvertion($valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days);
             }
         }
 
