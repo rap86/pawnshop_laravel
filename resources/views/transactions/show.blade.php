@@ -175,6 +175,7 @@
                                         <table class="dataTablesx table table-bordered table-striped">
                                             <thead>
                                                 <tr>
+                                                    <td class="text-bold">ID</td>
                                                     <td class="text-bold">PT No.</td>
                                                     <td class="text-bold">Start Date</td>
                                                     <td class="text-bold">Interest %</td>
@@ -188,8 +189,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($transactions->transaction_payments as $keyPayments => $valuePayments)        
+                                                @foreach($transactions->transaction_payments as $keyPayments => $valuePayments) 
+                                                
+                                                    @php 
+                                                        $payment_transaction_id_last = $valuePayments->id; 
+                                                    @endphp
+
                                                     <tr>
+                                                        <td>
+                                                            @if($valuePayments->id != false)
+                                                                {{ $valuePayments->id }}
+                                                            @endif 
+                                                        </td>
                                                         <td class="text-center">
                                                             @if(auth()->user()->role == "admin")
                                                                 @if($valuePayments->status == "granted")
@@ -249,16 +260,7 @@
                                                             @endif    
                                                         </td>
                                                         <td>
-                                                            @if($valuePayments->paid == "no")
-                                                                <div class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target=".interest-payment-modal-lg{{ $valuePayments->id }}">
-                                                                    {{ $valuePayments->paid }}
-                                                                </div>
-                                                                @include('inc.modal_payment', [
-                                                                    'transaction_id'    => $transactions->id,
-                                                                    'id'                => $valuePayments->id,
-                                                                    'net_amount'        => $transactions->net_amount
-                                                                ])
-                                                            @else 
+                                                            @if($valuePayments->paid == "yes")
                                                                 <div class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target=".interest-paid-details-modal-lg{{ $valuePayments->id }}">yes</div>
                                                                 @include('inc.modal_interest_paid_details', [
                                                                     'id' => $valuePayments->id,
@@ -266,7 +268,6 @@
                                                                     'status' => $valuePayments->status
                                                                 ])
                                                             @endif 
-															<div class="btn btn-primary btn-sm btn-block">undo</div>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -339,6 +340,17 @@
                         @include('inc.modal_less_principal', [
                             'transaction_id' => $transactions->id,
                             'net_amount'      => $transactions->net_amount
+                            ])
+                    </div>
+                    <div class="col-md-2 col-lg-2 pb-2">
+                        <div class="btn btn-dark btn-block" data-toggle="modal" data-target=".interest-payment-modal-lg">
+                            <i class="fa fa-file"></i>
+                            Renew / Tubos | {{ $payment_transaction_id_last }}
+                        </div>
+                        @include('inc.modal_payment', [
+                            'transaction_id'                => $transactions->id,
+                            'payment_transaction_id_last'   => $payment_transaction_id_last,
+                            'net_amount'                    => $transactions->net_amount
                             ])
                     </div>
                 </div>

@@ -729,6 +729,21 @@ $(document).ready(function () {
     // End, input for non jewelry
 
 
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Payment Interest Modal Start
+    */
+
     /**
      * This is input with id below will accept numbers only.
     */
@@ -746,27 +761,28 @@ $(document).ready(function () {
     */
     
 
-    $('.statusInputSelectPayment').change(function() {
-        var status = $(this).find(":selected").val();
+    $('#statusInputSelectPayment').change(function() {
+        status = $(this).find(":selected").val();
+        
         if(status == 'redeemed') {
 
-            $('div.div_add_principal_amount').show();
-            $('input.add_principal_amount').removeAttr('disabled', 'disabled').attr('readonly', 'readonly');
+            $('div#div_add_principal_amount').show();
+            $('input#add_principal_amount').removeAttr('disabled', 'disabled').attr('readonly', 'readonly');
 
-            var add_principal_amount = $('input.add_principal_amount').val();  
+            var add_principal_amount = $('input#add_principal_amount').val();  
             totalPaymentRenewOrRedeem(add_principal_amount);
 
         } else if(status == 'renewed') {
             
-            $('div.div_add_principal_amount').hide();
-            $('input.add_principal_amount').attr('disabled', 'disabled');
+            $('div#div_add_principal_amount').hide();
+            $('input#add_principal_amount').attr('disabled', 'disabled');
 
             totalPaymentRenewOrRedeem();
 
         } else {
 
-            $('div.div_add_principal_amount').hide();
-            $('input.add_principal_amount').attr('disabled', 'disabled');
+            $('div#div_add_principal_amount').hide();
+            $('input#add_principal_amount').attr('disabled', 'disabled');
 
             makeValueEmpty();
         }
@@ -777,25 +793,15 @@ $(document).ready(function () {
      * Once the below keyup for the below IDs it fired, 
      * it will invoke the function isRedeemedSelectedThenAdd(); 
     */
-    $("input.less_charge_amount").on('keyup', function(event) {
+    $("input#less_charge_amount, input#less_partial_amount, input#add_charge_amount").on('keyup', function(event) {
         //alert('less charge');
         isRedeemedSelectedThenAdd(); 
     });
-    
-    $("input.less_partial_amount").on('keyup', function(event) {
-       // alert('partial amount');
-        isRedeemedSelectedThenAdd(); 
-    });
-
-    $("input.add_charge_amount").on('keyup', function(event) {
-        //alert('add charge');
-        isRedeemedSelectedThenAdd();        
-    });
 
     function isRedeemedSelectedThenAdd() {
-        
+
         if(status == 'redeemed') {
-            var add_principal_amount = $('input.add_principal_amount').val(); 
+            var add_principal_amount = $('input#add_principal_amount').val(); 
             totalPaymentRenewOrRedeem(add_principal_amount);
         }
 
@@ -805,23 +811,21 @@ $(document).ready(function () {
         }
     }
 
-
     /**
      * This is computation for total amount for payment
      * for renew or redeemed.
     */
     function totalPaymentRenewOrRedeem(principal_amount = 0) {
 
-        console.log('abc');
-        var less_charge_amount      = Number($('input.less_charge_amount').val());
-        var less_partial_amount     = Number($('input.less_partial_amount').val());
-        var add_percent_amount      = Number($('input.add_percent_amount').val());
-        var add_charge_amount       = Number($('input.add_charge_amount').val());
-        var add_service_charge      = Number($('input.add_service_charge').val());
+        var less_charge_amount      = Number($('input#less_charge_amount').val());
+        var less_partial_amount     = Number($('input#less_partial_amount').val());
+        var add_percent_amount      = Number($('input#add_percent_amount').val());
+        var add_charge_amount       = Number($('input#add_charge_amount').val());
+        var add_service_charge      = Number($('input#add_service_charge').val());
         var add                     = add_percent_amount + add_charge_amount + add_service_charge +  Number(principal_amount);
         var less                    = less_partial_amount + less_charge_amount;
         var total_amount            = add - less;
-        $('input.total_amount').val(total_amount);
+        $('input#total_amount').val(total_amount);
     }
 
     /**
@@ -831,13 +835,23 @@ $(document).ready(function () {
     */
     function makeValueEmpty() {
       
-      $('input.less_charge_amount').val('');
-      $('input.less_partial_amount').val('');
-      $('input.add_percent_amount').val('');
-      $('input.add_charge_amount').val('');
-      $('input.add_service_charge').val('');
-      $('input.total_amount').val();
+      $('input#less_charge_amount').val('');
+      $('input#less_partial_amount').val('');
+      $('input#add_percent_amount').val('');
+      $('input#add_charge_amount').val('');
+      $('input#add_service_charge').val('');
+      $('input#total_amount').val('');
     }
+
+    /**
+    * Payment Interest Modal End
+    */
+
+    
+    $('#closeModalPayment').click(function() {
+        makeValueEmpty();
+        // location.reload();
+    });
 	
   });
 </script>
