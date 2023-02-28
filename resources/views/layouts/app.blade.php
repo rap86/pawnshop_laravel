@@ -47,7 +47,7 @@
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
       <!--img class="animation__shake" src="{{ asset('design/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="90" width="90"-->
-      <h1 class="animation__shake">Pawnshop</h1>
+      <!--h1 class="animation__shake">Pawnshop</h1-->
     </div>
   
     <!-- Navbar -->
@@ -129,10 +129,10 @@
       <!-- Brand Logo -->
       <a href="/" class="brand-link">
         <!--img src="{{ asset('design/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"-->
-        <span class="brand-text font-weight-light btn btn-secondary btn-block">
-        @if (!Auth::guest())
-        You : {{ Auth::user()->role }}
-        @endif
+        <span class="brand-text font-weight-light">
+          @if (!Auth::guest())
+          You : {{ Auth::user()->role }}
+          @endif
         </span>
       </a>
   

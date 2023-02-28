@@ -28,7 +28,7 @@ foreach ($transactions as $keyT => $valueT) {
     }
 </style>
 <div class="row">
-    <div class="col-md-12 cold-lg-12">
+    <div class="cold-lg-12 col-md-12">
         <div class="card card-secondary card-outline">
             <div class="card-header">
                 <ul class="nav nav-pills" id="myTab" role="tablist">
