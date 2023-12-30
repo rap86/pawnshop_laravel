@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+<?php
+
+ foreach($book_interests as $value) {
+    if ($value->book_id == 1) {
+        $book_one[] = $value;
+    }
+
+    if ($value->book_id == 2) {
+        $book_two[] = $value;
+    }
+
+    if ($value->book_id == 3) {
+        $book_three[] = $value;
+    }
+ }
+?>
+
 <div class="row ">
     <div class="col-md-12 col-sm-12 ">
         <div class="card card-secondary card-outline">
@@ -11,50 +28,32 @@
                 </a>
             </div>
             <div class="card-body">
-                @if(count($book_interests) > 0) 
-                    <div class="table-responsive">
-                        <table id="" class="dataTables table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Book Id</th>
-                                    <th>Book Name</th>
-                                    <th>Month</th>
-                                    <th>Interest</th>
-                                    <th>Details</th>
-                                    <th>Action</th>
-                                    <th>Forbidden</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($book_interests as $bookInterest)
-                                    <tr>
-                                        <td>{{ $bookInterest->id }}</td>
-                                        <td>{{ $bookInterest->book_id }}</td>
-                                        <td>{{ $bookInterest->book->name }}</td>
-                                        <td>{{ $bookInterest->month }}</td>
-                                        <td>{{ $bookInterest->percent_interest }}</td>
-                                        <td>{{ $bookInterest->details }}</td>
-                                        <td>
-                                            <a href="{{ route('book_interests.show', $bookInterest->id) }}" class="btn btn-secondary"><i class="fa fa-eye"> </i> View </a>
-                                            <a href="{{ route('book_interests.edit', $bookInterest->id) }}" class="btn btn-secondary"><i class="fa fa-edit"> </i> Edit </a>
-                                        </td>
-                                        <td>
-                                            <form method="POST" action="{{ route('book_interests.destroy', $bookInterest->id) }}">
-                                                @csrf
-                                                <input type="hidden" name="_method" value="DELETE" />
-                                                <div class="btn btn-secondary" id="btnConfirmationForNewRecord" data-text-message="delete">
-                                                    <i class="fa fa-edit"></i> 
-                                                    Delete
-                                                </div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                <div class="card-header">
+                    <ul class="nav nav-pills" id="transaction_show">
+                        <li class="nav-item"><a class="nav-link active" href="#book1" data-toggle="tab">Interest Book 1</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#book2" data-toggle="tab">Interest Book 2</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#book3" data-toggle="tab">Interest Book 3</a></li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="book1">
+                            @if(isset($book_one))
+                                @include('inc.table_book_interest',['book_interest' => $book_one])
+                            @endif
+                        </div>
+                        <div class="tab-pane" id="book2">
+                            @if(isset($book_two))
+                                @include('inc.table_book_interest',['book_interest' => $book_two])
+                            @endif
+                        </div>
+                        <div class="tab-pane" id="book3">
+                            @if(isset($book_three))
+                                @include('inc.table_book_interest',['book_interest' => $book_three])
+                            @endif
+                        </div>
                     </div>
-                @endif
+                </div>
             </div>
         </div>
     </div>

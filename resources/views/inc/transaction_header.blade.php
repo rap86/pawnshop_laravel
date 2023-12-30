@@ -1,7 +1,7 @@
 @if($transactions->status == 'granted')
     @php $thisColor = 'danger'; @endphp
 @elseif($transactions->status == 'uain')
-    @php $thisColor = 'success'; @endphp 
+    @php $thisColor = 'success'; @endphp
 @elseif($transactions->status == 'redeemed')
     @php $thisColor = 'primary'; @endphp
 @elseif($transactions->status == 'auctioned')
@@ -25,7 +25,7 @@
         <table class="table table-striped border-bottom border-left border-right">
             <tr>
                 <td rowspan="5" width="20%;">
-                    <img class="" width="100%;" src="/storage/female.png" />
+                    <img class="" width="100%;" src="/storage/image_item/{{ $transactions->image_name }}" />
                 </td>
                 <td width="15%;">BIR</td>
                 <td width="15%;">{{ $transactions->bir }}</td>
@@ -40,7 +40,7 @@
                     @if($transactions->transaction_items)
                         @foreach($transactions->transaction_items as $keyItem => $valueItem)
                             <input type="checkbox">
-                            {{ $valueItem->item_name }} &emsp; 
+                            {{ $valueItem->item_name }} &emsp;
                         @endforeach
                     @endif
                 </td>
@@ -48,11 +48,11 @@
             <tr>
                 <td>Gross</td>
                 <td>{{ $transactions->gross_amount }}</td>
-                
+
                 @if($transactions->item->jewelry == 'yes')
                     <td>Karat</td>
                     <td>{{ $transactions->karat }}</td>
-                @else	
+                @else
                     <td>Brand</td>
                     <td>{{ $transactions->brand }}</td>
                 @endif
@@ -60,15 +60,15 @@
             <tr>
                 <td>Net</td>
                 <td>{{ $transactions->net_amount }}</td>
-                
+
                 @if($transactions->item->jewelry == 'yes')
                     <td>Weight</td>
                     <td>{{ $transactions->weight }}</td>
-                @else	
+                @else
                     <td>Brand</td>
                     <td>{{ $transactions->model }}</td>
                 @endif
-                
+
             </tr>
             <tr>
                 <td>Branch ID</td>

@@ -8,26 +8,33 @@ use App\Models\Customer;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function callDiffDateConvertion($dataConvertInDiffDates) {
 
         $computations = new ComputationsController();
         $resultDiffDatesConvertion = $computations->convertToYearMonthDay($dataConvertInDiffDates);
         return $resultDiffDatesConvertion;
-   
+
     }
 
     public function formatDateDiff($transactions) {
-        
+
         foreach ($transactions as $keyT => $valueT) {
 
             if(!empty($valueT->transaction_payments[ count($valueT->transaction_payments) - 1])) {
-            
+
                 $valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days = $this->callDiffDateConvertion($valueT->transaction_payments[ count($valueT->transaction_payments) -1 ]->diff_days);
             }
         }
@@ -41,7 +48,7 @@ class TransactionsController extends Controller
         $where[] = ['branch_id', '=', 1 ];
 
         $transactions = Transaction::with([
-            
+
             'transaction_payments' => function($query) {
 				$query->select([
                     'transaction_payments.id',
@@ -111,6 +118,18 @@ class TransactionsController extends Controller
         ]);
     }
 
+    public function itemImageStorage($item_image_name)
+	{
+		$image = $item_image_name; // your base64 encoded
+		$image = str_replace('data:image/jpeg;base64,', '', $image);
+		$image = str_replace(' ', '+', $image);
+		$imageName = date('Ymd').time().'.jpeg';
+
+		Storage::disk('folder_item')->put($imageName, base64_decode($image));
+
+		return $imageName;
+	}
+
     /**
      * Show the form for creating a new resource.
      *
@@ -118,9 +137,11 @@ class TransactionsController extends Controller
      */
     public function create($customer_id)
     {
+
         $books = Book::all();
         $items = Item::where('active','=', 'yes')->get();
         $customer = Customer::find($customer_id);
+       // dd($books);
         return view('transactions.create',[
             'customer'=> $customer,
             'items' => $items,
@@ -142,11 +163,20 @@ class TransactionsController extends Controller
             'gross_amount' => 'required'
         ]);
 
+        /*
+        * If image is not empty, then process the image ang store to specified location
+        */
+        if($request->image_name != "") {
+
+            $request['image_name'] = $this->itemImageStorage($request->image_name);
+        }
+
         // get the item array only
         $itemsArray = $request['data'];
         $request['net_amount_duplicate'] = $request['net_amount'];
         $request['user_id'] = Auth::user()->id;
         $transactionInfo = $request->except('data');
+
 
         /*
         * Check if item array of name is not empty
@@ -155,10 +185,10 @@ class TransactionsController extends Controller
 
             $transaction_id = Transaction::create($transactionInfo)->id;
 
-            foreach($itemsArray['Item'] as $key => $value) 
+            foreach($itemsArray['Item'] as $key => $value)
             {
                 $value = implode(" ",$value);
-    
+
                 $transactionItem = new TransactionItem();
                 $transactionItem->transaction_id = $transaction_id;
                 $transactionItem->item_name = $value;
@@ -214,9 +244,9 @@ class TransactionsController extends Controller
                     'ptnumber_logs' => function($query) {
                         $query->select('ptnumber_logs.*');
                     }
-                    
+
                 ]);
-                
+
             },
 			'customer'=>function($query) {
 				$query->select([
@@ -276,7 +306,9 @@ class TransactionsController extends Controller
     {
         $transaction = Transaction::find($id);
         $transaction->delete();
-        return redirect()->route('transactions.index')->with('flash_success', 'Transaction Deleted!');
+        $notification = "Transaction Deleted!";
+        return redirect()->route('home.notification', $notification)->with('flash_success', 'Transaction Deleted!');
+
     }
 
     public function dashboard()
@@ -289,7 +321,7 @@ class TransactionsController extends Controller
         if(!empty($request->input('slave_id')) && !empty($request->input('master_id'))){
             $customer_id_slave = $request->input('slave_id');
             $customer_id_master = $request->input('master_id');
-            
+
             $customer_transactions_slave = Transaction::where('customer_id', '=', $customer_id_slave)->get();
             if(count($customer_transactions_slave) > 0)
             {
@@ -298,9 +330,10 @@ class TransactionsController extends Controller
                     return redirect()->route('customers.show', $customer_id_master)->with('flash_success', 'Records has been merged.');
                 }
             }
-            
+
         } else {
-            return redirect()->route('/')->with('flash_failure', 'Error, please contact your admin.');
+            $notification = "Unable to merge the record of this customer!";
+            return redirect()->route('home.notification', $notification)->with('flash_failure', 'Error, please contact your admin.');
         }
     }
 }

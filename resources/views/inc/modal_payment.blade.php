@@ -14,31 +14,34 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-						
-						<div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Status</label>
                                 <div class="col-md-12">
-                                    <select class="form-control" id="statusInputSelectPayment" name="status" style="font-size:65px; height:85px;">
+                                    <select class="form-control" id="statusInputSelectPayment" name="status" style="font-size:65px; height:100px;">
                                         <option></option>
-                                        <option value="renewed">Renew</option>
+                                        <option value="renewed">Sangla</option>
                                         <option value="redeemed">Tubos</option>
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
 
+						<div class="col-lg-6">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
-                                    <span class="text-danger">Less Charge</span>
+                                    Less Charge
                                 </label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" id="less_charge_amount" name="less_charge_amount" autocomplete="off">
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
-                                    <span class="text-danger">Partial Amount</span>
+                                    Partial Amount
                                 </label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" id="less_partial_amount" name="less_partial_amount" autocomplete="off">
@@ -48,7 +51,7 @@
                         <div class="col-lg-6">
 							<div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
-                                    <span class="text-success">Percent Interest</span>
+                                    Percent Interest
                                 </label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" name="percent_interest" autocomplete="off" readonly>
@@ -56,7 +59,7 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
-                                    <span class="text-success">Percent Amount</span>
+                                    Percent Amount
                                 </label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" id="add_percent_amount" name="add_percent_amount" autocomplete="off" readonly>
@@ -64,15 +67,15 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
-                                    <span class="text-success">Add Charge</span>
+                                    Add Charge
                                 </label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" id="add_charge_amount" name="add_charge_amount" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group row" id="div_add_principal_amount" style="display:none;">
-                                <label class="col-form-label col-md-5 text-danger label-align">
-                                    <span class="text-success">Principal Amount</span>
+                                <label class="col-form-label col-md-5 label-align">
+                                    Principal Amount
                                 </label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" id="add_principal_amount" name="add_principal_amount" value="{{ $net_amount }}" readonly>
@@ -80,16 +83,16 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
-                                    <span class="text-success">Service Charge</span>
+                                    Service Charge
                                 </label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" id="add_service_charge" name="add_service_charge" autocomplete="off" readonly>
                                 </div>
                             </div>
-        
+
                             <div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
-                                    <span class="text-success">Total Amount</span>
+                                    Total Amount
                                 </label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" id="total_amount" name="total_amount" autocomplete="off" readonly>
@@ -100,15 +103,15 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 label-align">Details</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control" name="details" autocomplete="off" id="remarks">
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label class="col-form-label col-md-2 label-align">O.R. Number</label>
                                 <div class="col-md-10">
                                     <input type="text" class="form-control" name="ornumber" autocomplete="off" id="ornumber">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2 label-align">Details</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="details" autocomplete="off" id="remarks" value="">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -121,16 +124,16 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-default">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                        <i class="fa fa-times"></i>
-                        Cancel
-                    </button>
                     <div type="button" class="btn btn-primary" id="btnConfirmationForNewRecord">
                         <i class="fa fa-save"></i>
                         Save
                     </div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </button>
                 </div>
-            </div>  
+            </div>
         </form>
     </div>
 </div>

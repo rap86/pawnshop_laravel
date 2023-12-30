@@ -14,3 +14,16 @@ to
 'timezone' => env('APP_TIMEZONE', 'UTC'),
 
 ----------
+
+Pag may error gaya ng sa ibaba:
+ Problem 1
+    - mpdf/mpdf is locked to version v8.1.4 and an update of this package was not requested.
+    - mpdf/mpdf v8.1.4 requires ext-gd * -> it is missing from your system. Install or enable PHP's gd extension.
+
+To enable extensions, verify that they are enabled in your .ini files:
+    - C:\xampp\php\php.ini
+You can also run `php --ini` in a terminal to see which files are used by PHP in CLI mode.
+Alternatively, you can run Composer with `--ignore-platform-req=ext-gd` to temporarily ignore these required extensions.
+
+Go to:
+- C:\xampp\php\php.ini and enable the extension=gd, then run this command :  composer update ramsey/uuid 

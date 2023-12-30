@@ -8,7 +8,7 @@
 			<div class="card card-secondary card-outline">
 
 				<div class="card-header">
-					<span class="text-muted text-lg">Add</span>
+					<span class="text-muted text-lg">Add Book Interest</span>
 				</div>
 				<div class="card-body">
 				
@@ -54,14 +54,14 @@
 					
 				</div>
 				<div class="card-footer border">
-					<a href="{{ route('book_interests.index') }}" class="btn btn-secondary">
-						<i class="fa fa-times"></i> 
-						Cancel
-					</a>
 					<div class="btn btn-secondary" id="btnConfirmationForNewRecord">
 						<i class="fa fa-edit"></i> 
 						Save
 					</div>
+					<a href="{{ route('book_interests.index') }}" class="btn btn-secondary">
+						<i class="fa fa-times"></i> 
+						Cancel
+					</a>
 				</div>
 			</div>
 		</form>

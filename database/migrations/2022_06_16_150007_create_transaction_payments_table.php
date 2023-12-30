@@ -32,8 +32,8 @@ return new class extends Migration
             $table->string('paid')->nullable();
             $table->string('details', 255)->nullable();
             $table->string('ornumber')->nullable();
-            $table->unsignedInteger('user_id_who_create_pt');
-            $table->unsignedInteger('user_id_who_renew_pt');
+            $table->unsignedInteger('user_id_who_create_pt')->nullable();
+            $table->unsignedInteger('user_id_who_renew_pt')->nullable();
             $table->timestamps();
 
             $table->index('transaction_id');

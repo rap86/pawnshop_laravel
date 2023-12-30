@@ -5,7 +5,7 @@
     <div class="col-md-12 cold-lg-12">
         <div class="card card-secondary card-outline">
 			<div class="card-header">
-				<span class="text-muted text-lg">Details</span>
+				<span class="text-muted text-lg">See the details of item {{ $item->name }}</span>
 			</div>
             <div class="card-body">
 			

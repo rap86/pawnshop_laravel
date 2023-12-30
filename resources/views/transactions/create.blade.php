@@ -98,7 +98,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label label-align">
                                             <i class="fa fa-circle itemCircle" style="font-size: 18px;"></i>
-                                            Item 
+                                            Item
                                         </label>
                                         <div class="col-sm-9">
                                             <select class="form-control" name="item_id" id="itemInput">
@@ -130,7 +130,7 @@
                                     <div class="form-group row JewelryInput" style="display:none;">
                                         <label class="col-sm-3 col-form-label label-align">
                                             <i class="fa fa-circle itemCircle" style="font-size: 18px;"></i>
-                                            Karat 
+                                            Karat
                                         </label>
                                         <div class="col-sm-9">
                                             <input type="text" name="karat" value="{{ old('karat') }}" class="form-control JewelryInput" autocomplete="off">
@@ -146,7 +146,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="x_content">
                                         <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
                                             <li class="nav-item">
@@ -156,7 +156,7 @@
                                                 <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">Non-jewelry</a>
                                             </li>
                                         </ul>
-                                        
+
                                         <div class="tab-content" id="myTabContent">
                                             <div class="tab-pane fade show active" id="one" role="tabpanel" aria-labelledby="one-tab">
                                                 <br>
@@ -179,7 +179,7 @@
                                                             </div>
                                                         </div>
                                                         <div id="nonDefaultDivJewelry">
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -206,7 +206,7 @@
                                                             </div>
                                                         </div>
                                                         <div id="nonDefaultDivJewelryNot">
-                                                            
+
                                                         </div>
 
                                                     </div>
@@ -227,7 +227,7 @@
                                         <div class="card-body box-profile border">
                                             <center>
                                                 <div class="w3-container" style="min-height:300px;" id="results">
-                                                    
+
                                                 </div>
                                             </center>
                                         </div>
@@ -262,16 +262,16 @@
                     </div>
                 </div>
                 <div class="card-footer border">
-                    <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-danger pull-right">
-                        <i class="fa fa-times"></i>
-                        Cancel
-                    </a>
                     <div class="btn btn-primary" id="btnConfirmationForNewRecord">
                         <i class="fa fa-save"></i>
                         Save
                     </div>
+                    <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-danger pull-right">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </a>
                 </div>
-            </div>   
+            </div>
         </form>
     </div>
 </div>
@@ -285,7 +285,7 @@ Webcam.set({
 	jpeg_quality: 95
 });
 Webcam.attach( '#my_camera' );
-	
+
 function take_snapshot() {
 		// take snapshot and get image data
 		Webcam.snap( function(data_uri) {
@@ -299,7 +299,7 @@ function take_snapshot() {
 
 <script>
 $(document).ready(function () {
-    
+
     /**
      * This is for new granted transaction
     */
@@ -311,7 +311,7 @@ $(document).ready(function () {
     $('#grossAmountId').keyup(function() {
 
         var book_id = Number($("#bookId").find(":selected").val());
-        
+
         if(book_id === 1) {
             deduct_first_month = "{{ $books[0]->deduct_first_month }}";
             if(deduct_first_month == "no") {

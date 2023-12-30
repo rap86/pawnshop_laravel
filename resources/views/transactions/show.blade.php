@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<?php 
+<?php
  $ptLogsTableShow = 0;
  foreach($transactions->transaction_payments as $keyPayments => $valuePayments) {
     if (count($valuePayments->ptnumber_logs) > 0) {
@@ -10,6 +10,7 @@
     } else {
         $ptLogsTableShow = 0;
     }
+
  }
 ?>
 <div class="row">
@@ -32,7 +33,7 @@
 
                             <!--
                             * start transaction header
-                            * Due to error/wrong input of transaction details etc.. 
+                            * Due to error/wrong input of transaction details etc..
                             * Users can delete the transaction if no pt number assigned yet.
                             -->
                         <div class="row">
@@ -42,7 +43,7 @@
                                         @csrf
                                         <input type="hidden" name="_method" value="DELETE" />
 
-                                        <div class="btn btn-danger btn-block mb-2" id="btnConfirmationForNewRecord" style="cursor:pointer;">
+                                        <div class="btn btn-danger btn-block mb-2" id="btnConfirmationForNewRecord" data-text-message="delete" style="cursor:pointer;">
                                             If you seeing this text, meaning you can delete this transaction.
                                             Click me, if you want to delete this transaction.
                                         </div>
@@ -50,7 +51,7 @@
                                 </div>
                             @endif
                             @include('inc.transaction_header', ['transactions' => $transactions])
-                        </div> 
+                        </div>
                         <!-- end transaction header -->
 
                         <!-- start accordion-->
@@ -125,7 +126,7 @@
                                     <div class="card-header">
                                         <h4 class="card-title w-100">
                                             <a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false">
-                                                Edited Pawn Ticket Logs 
+                                                Edited Pawn Ticket Logs
                                             </a>
                                         </h4>
                                     </div>
@@ -142,17 +143,17 @@
                                                         <th>User</th>
                                                         <th>Date</th>
                                                     </tr>
-                                                    @foreach($transactions->transaction_payments as $keyPayments => $valuePayments)   
-                                                        @if(count($valuePayments->ptnumber_logs) > 0) 
+                                                    @foreach($transactions->transaction_payments as $keyPayments => $valuePayments)
+                                                        @if(count($valuePayments->ptnumber_logs) > 0)
                                                             @foreach($valuePayments->ptnumber_logs as $keyPtLogs => $valuePtLogs)
-                                                            
+
                                                                 <tr>
                                                                     <td>{{ $valuePtLogs->id }}</td>
                                                                     <td>{{ $valuePtLogs->transaction_payment_id }}</td>
                                                                     <td>{{ $valuePtLogs->ptnumber_new }}</td>
                                                                     <td>{{ $valuePtLogs->ptnumber_old }}</td>
-                                                                    <td>{{ $valuePtLogs->remarks }}</td>
-                                                                    <td></td>
+                                                                    <td>{{ $valuePtLogs->details }}</td>
+                                                                    <td>{{ $valuePtLogs->user_id }}</td>
                                                                     <td>{{ date('M j, Y', strtotime($valuePtLogs->created_at)) }}</td>
                                                                 </tr>
                                                             @endforeach
@@ -189,17 +190,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($transactions->transaction_payments as $keyPayments => $valuePayments) 
-                                                
-                                                    @php 
-                                                        $payment_transaction_id_last = $valuePayments->id; 
+                                                @foreach($transactions->transaction_payments as $keyPayments => $valuePayments)
+
+                                                    @php
+                                                        $payment_transaction_id_last = $valuePayments->id;
                                                     @endphp
 
                                                     <tr>
                                                         <td>
                                                             @if($valuePayments->id != false)
                                                                 {{ $valuePayments->id }}
-                                                            @endif 
+                                                            @endif
                                                         </td>
                                                         <td class="text-center">
                                                             @if(auth()->user()->role == "admin")
@@ -217,47 +218,47 @@
                                                                 {{ $valuePayments->ptnumber }}
                                                             @endif
                                                         </td>
-                                                        <td>{{ date('M j, Y',strtotime($valuePayments->payment_startdate)) }}
-                                                            
-                                                             Y{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['year'] }}
-                                                             M{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['month'] }}
-                                                             D{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['day'] }}
-                                                             
+                                                        <td>{{ date('M j, Y',strtotime($valuePayments->payment_startdate)) }} |
+
+                                                            Y{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['year'] }}
+                                                            M{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['month'] }}
+                                                            D{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['day'] }}
+
                                                         </td>
                                                         <td>
                                                             @if($valuePayments->percent_interest != false)
                                                                 {{ $valuePayments->percent_interest }}
-                                                            @endif 
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if($valuePayments->add_service_charge != false)
                                                                 {{ $valuePayments->add_service_charge }}
-                                                            @endif 
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if($valuePayments->add_percent_amount != false)
                                                                 {{ $valuePayments->add_percent_amount }}
-                                                            @endif 
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if($valuePayments->less_partial_amount != false)
                                                                 {{ $valuePayments->less_partial_amount }}
-                                                            @endif 
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if($valuePayments->less_principal_amount != false)
                                                                 {{ $valuePayments->less_principal_amount }}
-                                                            @endif 
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if($valuePayments->total_amount != false)
                                                                 {{ $valuePayments->total_amount }}
-                                                            @endif 
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if($valuePayments->payment_enddate != false)
                                                                 {{ date('M j, Y',strtotime($valuePayments->payment_enddate)) }}
-                                                            @endif    
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if($valuePayments->paid == "yes")
@@ -267,7 +268,7 @@
                                                                     'ornumber'=> $valuePayments->ornumber,
                                                                     'status' => $valuePayments->status
                                                                 ])
-                                                            @endif 
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -275,7 +276,7 @@
                                         </table>
                                     @endif
                                 </div>
-                            </div>  
+                            </div>
                         </div>
                         <!-- end interest table -->
 
@@ -286,20 +287,20 @@
 						@include('inc.customer_info', ['customer'=> $transactions->customer, 'clickable'=>'false', 'visible'=>'yes'])
 					</div>
 				</div>
-            </div> 
+            </div>
 
             <div class="card-footer border">
                 <!-- start botton menu -->
                 <div class="row">
                     <div class="col-md-2 col-lg-2 pb-2">
                         @if(isset($transactions->transaction_payments[count($transactions->transaction_payments) - 1]))
-                            
+
                             @if($transactions->transaction_payments[count($transactions->transaction_payments) - 1]->paid == 'no')
                                 <div class="btn btn-secondary btn-block">
                                     <i class="fa fa-plus"></i>
                                     New PT.
                                 </div>
-                            @else 
+                            @else
                                 <div class="btn btn-dark btn-block" data-toggle="modal" data-target=".bs-example-modal-lg">
                                     <i class="fa fa-plus"></i>
                                     New PT.
@@ -318,7 +319,7 @@
                             'book_id' => $transactions->book_id
                         ])
                     </div>
-                    
+
                     <!-- This will work only of transaction_payments array is available, meaning may laman yung array data -->
                     <div class="col-md-2 col-lg-2 pb-2">
                         <div class="btn btn-dark btn-block" data-toggle="modal" data-target=".set-status-modal-lg">
@@ -342,10 +343,11 @@
                             'net_amount'      => $transactions->net_amount
                             ])
                     </div>
+                    @if(isset($payment_transaction_id_last))
                     <div class="col-md-2 col-lg-2 pb-2">
                         <div class="btn btn-dark btn-block" data-toggle="modal" data-target=".interest-payment-modal-lg">
                             <i class="fa fa-file"></i>
-                            Renew / Tubos | {{ $payment_transaction_id_last }}
+                            Renew / Tubos
                         </div>
                         @include('inc.modal_payment', [
                             'transaction_id'                => $transactions->id,
@@ -353,6 +355,7 @@
                             'net_amount'                    => $transactions->net_amount
                             ])
                     </div>
+                    @endif
                 </div>
                 <!-- end botton menu -->
             </div>

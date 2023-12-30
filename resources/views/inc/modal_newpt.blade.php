@@ -32,16 +32,16 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">
-                        <i class="fa fa-times"></i>
-                        Cancel
-                    </button>
                     <div type="button" class="btn btn-primary" id="btnConfirmationForNewRecord">
                         <i class="fa fa-save"></i>
                         Save
                     </div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </button>
                 </div>
-            </div>  
+            </div>
         </form>
     </div>
 </div>

@@ -61,6 +61,7 @@ Route::resource('/transaction_payments', TransactionPaymentsController::class);
 
 Auth::routes();
 
+Route::get('/home/notification/{notification}', [App\Http\Controllers\HomeController::class, 'notification'])->name('home.notification');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/download_database', [App\Http\Controllers\HomeController::class, 'download_database'])->name('home.download_database');
 Route::get('/dbdownload', [App\Http\Controllers\HomeController::class, 'dbdownload'])->name('home.dbdownload');

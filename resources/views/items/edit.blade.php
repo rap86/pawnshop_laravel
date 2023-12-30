@@ -9,7 +9,7 @@
 
 			<div class="card card-secondary card-outline">
 				<div class="card-header">
-					<span class="text-muted text-lg">Edit</span>
+					<span class="text-muted text-lg">Edit the details of item {{ $item->name }}</span>
 				</div>
 				<div class="card-body">
 				
@@ -58,14 +58,14 @@
 					
 				</div>
 				<div class="card-footer border">
-					<a href="{{ route('items.index') }}" class="btn btn-secondary">
-						<i class="fa fa-times"></i> 
-						Cancel
-					</a>
 					<div class="btn btn-secondary" id="btnConfirmationForNewRecord">
 						<i class="fa fa-edit"></i> 
 						Save
 					</div>
+					<a href="{{ route('items.index') }}" class="btn btn-secondary">
+						<i class="fa fa-times"></i> 
+						Cancel
+					</a>
 				</div>
 			</div>
 		</form>

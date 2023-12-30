@@ -5,7 +5,7 @@
     <div class="col-md-12 col-sm-12 ">
         <div class="card card-secondary card-outline">
             <div class="card-header">
-                <a href="{{ route('book_interests.create') }}" class="btn btn-secondary">
+                <a href="{{ route('item_interests.create') }}" class="btn btn-secondary">
                     <i class="fa fa-plus"></i>
                     Add Item Interest
                 </a>

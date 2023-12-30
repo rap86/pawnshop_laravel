@@ -9,7 +9,7 @@
 				<input type="hidden" name="_method" value="PUT" />
 					
 				<div class="card-header">
-					<span class="text-muted text-lg">Edit</span>
+					<span class="text-muted text-lg">Edit the details of Book {{$book->id}}</span>
 				</div>
 				<div class="card-body">
 					<div class="form-group row">
@@ -84,14 +84,14 @@
 					</div>
 				</div>
 				<div class="card-footer border">
+				    <div class="btn btn-secondary" id="btnConfirmationForNewRecord">
+						<i class="fa fa-edit"></i> 
+						Save
+					</div>
 					<a href="{{ route('books.index') }}" class="btn btn-secondary">
 						<i class="fa fa-times"></i> 
 						Cancel
 					</a>
-					<div class="btn btn-secondary" id="btnConfirmationForNewRecord">
-						<i class="fa fa-edit"></i> 
-						Save
-					</div>
 				</div>
 			</form>
         </div>

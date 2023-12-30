@@ -31,16 +31,21 @@ class HomeController extends Controller
         return view('dbdownload');
     }
 
+    public function notification($notification)
+    {
+        return view('notification')->with('notification', $notification);
+    }
+
     function download_database(){
-		
+
 		$this->backupDatabase();
         return redirect()->route('home.dbdownload')->with('flash_success', 'Database downloaded!');
-		
+
 	}
-	
+
 	function backupDatabase($dbHost='localhost',$dbUsername='root',$dbPassword='',$dbName='pawnshop_dev',$tables = '*'){
 		//connect & select the database
-		
+
 		  //ENTER THE RELEVANT INFO BELOW
           $mysqlHostName      = env('DB_HOST');
           $mysqlUserName      = env('DB_USERNAME');
@@ -50,17 +55,17 @@ class HomeController extends Controller
           $tables             = array(
                                     "users",
                                     "customers",
-                                    "transactions", 
-                                    "books", 
+                                    "transactions",
+                                    "books",
                                     "items"); //here your tables...
-  
+
           $connect = new \PDO("mysql:host=$mysqlHostName;dbname=$DbName;charset=utf8", "$mysqlUserName", "$mysqlPassword",array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
           $get_all_table_query = "SHOW TABLES";
           $statement = $connect->prepare($get_all_table_query);
           $statement->execute();
           $result = $statement->fetchAll();
-  
-  
+
+
           $output = '';
           foreach($tables as $table)
           {
@@ -68,7 +73,7 @@ class HomeController extends Controller
            $statement = $connect->prepare($show_table_query);
            $statement->execute();
            $show_table_result = $statement->fetchAll();
-  
+
            foreach($show_table_result as $show_table_row)
            {
             $output .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
@@ -77,7 +82,7 @@ class HomeController extends Controller
            $statement = $connect->prepare($select_query);
            $statement->execute();
            $total_row = $statement->rowCount();
-  
+
            for($count=0; $count<$total_row; $count++)
            {
             $single_result = $statement->fetch(\PDO::FETCH_ASSOC);
@@ -91,16 +96,16 @@ class HomeController extends Controller
 
           $directoryName = 'C:/pawnshopDatabase/'.date('Y-m-d');
           if(!is_dir($directoryName)){
-          
+
               mkdir($directoryName, 0755, true);
-              
+
           }
-                  
+
           //save file
-  
+
           $file_name = fopen($directoryName.'/'.date('Y-m-d').'.sql','w+');
           fwrite($file_name, $output);
           fclose($file_name);
-  
+
 	}
 }

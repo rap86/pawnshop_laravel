@@ -5,7 +5,7 @@
     <div class="col-md-12 cold-lg-12">
         <div class="card card-secondary card-outline">
 			<div class="card-header">
-				<span class="text-muted text-lg">Details</span>
+				<span class="text-muted text-lg">See the details of Book {{$book->id}}</span>
 			</div>
             <div class="card-body">
 				<div class="form-group row">

@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\Book;
 use App\Models\PtnumberLog;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionPaymentsController extends Controller
 {
@@ -47,10 +48,11 @@ class TransactionPaymentsController extends Controller
 
         $transaction_id = $request->input('transaction_id');
         $book_id = $request->input('book_id');
+        $request['user_id_who_create_pt'] = Auth::user()->id;
         $where[] = ['ptnumber', '=', $request->input('ptnumber')];
 
         $transaction_payments = TransactionPayment::with([
-            
+
             'transaction'=>function($query) {
                 $query->select([
                     'transactions.*'
@@ -74,7 +76,7 @@ class TransactionPaymentsController extends Controller
         return redirect()->route('transactions.show', $transaction_id)->with(
             'flash_success', 'New PT Number Saved!'
         );
-        
+
     }
 
     /**
@@ -106,7 +108,7 @@ class TransactionPaymentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -122,7 +124,7 @@ class TransactionPaymentsController extends Controller
         );
 
     }
-    
+
 
     /*
      * Specific update method for ptnumber
@@ -131,7 +133,7 @@ class TransactionPaymentsController extends Controller
 
     public function update_ptnumber(Request $request, $id)
     {
-        
+
         $this->validate($request, [
             'ptnumber_new' => 'required',
             'details' => 'required',
@@ -139,8 +141,9 @@ class TransactionPaymentsController extends Controller
 
         if(!empty($request->input('ptnumber_old')))
         {
-            
+
             $ptnumberInfo = TransactionPayment::find($id);
+            $request['user_id'] = Auth::user()->id;
             $ptnumberInfo->ptnumber = $request->input('ptnumber_new');
             if($ptnumberInfo->save())
             {
@@ -172,7 +175,7 @@ class TransactionPaymentsController extends Controller
         $ptnumber = $request->input('ptnumber');
 
         $transactions = Transaction::with([
-            
+
             'transaction_payments' => function($query) use($ptnumber) {
 				$query->select([
                     'transaction_payments.id',
@@ -206,5 +209,5 @@ class TransactionPaymentsController extends Controller
             'transactions' => $transactions
         ]);
     }
-    
+
 }
