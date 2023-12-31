@@ -25,16 +25,16 @@
   <link rel="stylesheet" href="{{ asset('design/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('design/plugins/summernote/summernote-bs4.min.css') }}">
-  
+
     <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('design/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('design/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('design/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-  
+
 	<!--SweetAlert 2-->
 	<link href="{{ asset('swal/sweetalert2.min.css') }}" rel="stylesheet">
 
-	
+
 	<style>
 		label.label-align {
 			text-align: left;
@@ -49,7 +49,7 @@
       <!--img class="animation__shake" src="{{ asset('design/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="90" width="90"-->
       <!--h1 class="animation__shake">Pawnshop</h1-->
     </div>
-  
+
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
@@ -61,7 +61,7 @@
         <a href="{{ route('home.download_database') }}" class="nav-link">Backup DB</a>
         </li-->
       </ul>
-  
+
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
@@ -83,7 +83,7 @@
             <i class="fas fa-sign-out-alt"></i>
             {{ __('Logout') }}
           </a>
-  
+
           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
           @csrf
           </form>
@@ -123,7 +123,7 @@
       </ul>
     </nav>
     <!-- /.navbar -->
-  
+
     <!-- Main Sidebar Container bg-success-->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
@@ -135,10 +135,10 @@
           @endif
         </span>
       </a>
-  
+
       <!-- Sidebar -->
       <div class="sidebar">
-  
+
         <!-- Sidebar user panel (optional) -->
         <!--div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
@@ -178,7 +178,7 @@
             </div>
           </form>
         </div>
-  
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -302,7 +302,7 @@
       </div>
       <!-- /.sidebar -->
     </aside>
-  
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -340,7 +340,7 @@
         <b>Version</b> 3.1.0
       </div>
     </footer>
-  
+
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
@@ -405,13 +405,13 @@
 <script>
 $(document).ready(function () {
     $("#example1").DataTable({
-      "responsive": true, 
-	  "lengthChange": false, 
+      "responsive": true,
+	  "lengthChange": false,
 	  "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-	
-	
+
+
     $('.dataTables').DataTable({
       "paging": true,
       "lengthChange": true,
@@ -422,13 +422,13 @@ $(document).ready(function () {
       "responsive": true,
 	  "pageLength": 25
     });
-	
+
 	 // For master record input search
     $('#btnCustomerSearchMaster').click(function() {
-        
+
         var lastnameMaster = $('#txtLastnameSearchMaster').val();
             if($.trim(lastnameMaster) == '')
-            {   
+            {
                 modalMessage('Input the <b>Lastname</b> you want to search!');
                 return false;
             }
@@ -436,10 +436,10 @@ $(document).ready(function () {
 
     // For customer's name input search
     $('#btnCustomerSearch').click(function() {
-        
+
 		var lastname = $('#txtLastnameSearch').val();
         if($.trim(lastname) == '')
-        {   
+        {
             modalMessage('Input the <b>Lastname</b> you want to search!');
             return false;
         }
@@ -447,10 +447,10 @@ $(document).ready(function () {
 
     // For pawn ticket input search
     $('#btnPtNumberSearch').click(function() {
-        
+
         var ptnumber = $('#txtPtNumberSearch').val();
             if($.trim(ptnumber) == '')
-            {   
+            {
                 modalMessage('Input the <b>PT Number</b> you want to search!');
                 return false;
             }
@@ -464,7 +464,7 @@ $(document).ready(function () {
     });
 
     // Function for modal dialog confirmation
-    function modalConfirmation($this, attr_text = 'save') 
+    function modalConfirmation($this, attr_text = 'save')
     {
         Swal.fire({
             title: 'You want to ' + attr_text + ' ?',
@@ -496,7 +496,7 @@ $(document).ready(function () {
             showConfirmButton: false,
             timer: 1500
         });
-    }   
+    }
 
     // For flash message success
     @if(Session::has('flash_success'))
@@ -521,7 +521,7 @@ $(document).ready(function () {
     @endif
 
     /**
-     * Once click the image of customer or item it will enlarge via modal, 
+     * Once click the image of customer or item it will enlarge via modal,
      * regarless the location of image display it will enlarge once clicked.
     */
     $('img').click(function() {
@@ -548,7 +548,8 @@ $(document).ready(function () {
     @endif
 
     /**
-     * Trasactions contoller, create method 
+     * Start
+     * Trasactions contoller, create method
      * This is for items input select
     */
     $('#itemInput').change(function() {
@@ -566,20 +567,20 @@ $(document).ready(function () {
             // tab 1 body
             $('div#one').addClass(' active show');
 
-            // tab 2 
+            // tab 2
             $('a#two-tab').removeClass(' active').attr('aria-selected', false);
             // tab 2 body
             $('div#two').removeClass(' active show');
 
             // remove the children in tab 2, once tab 1 is selected
             $('div#nonDefaultDivJewelryNot').children().remove();
-            
+
             // clear the input of tab 2, once tab 1 is selected
             $('input.non_jewelry_input').val('');
 
              // disabled the input of tab 2
             $('input.non_jewelry_input').attr('disabled', 'disabled');
-            
+
             // enable the input of tab 1
             $('input.jewelry_input').removeAttr('disabled', 'disabled');
 
@@ -594,20 +595,17 @@ $(document).ready(function () {
             */
             $('.JewelryInput').show();
             $('.NonJewelryInput').hide();
-            $('input.NonJewelryInput').val('');
 
         } else if($.trim(is_Jewelry) == false) {
 
-          
+
             $('.itemCircle').removeClass('text-primary').removeClass('text-success').addClass('text-black');
-            
+
             /*
             * If no item id is selected, hide the div input for jewelry and non jewelry id
             */
             $('.JewelryInput').hide();
             $('.NonJewelryInput').hide();
-            $('input.JewelryInput').val('');
-            $('input.NonJewelryInput').val('');
 
             modalMessage('Please select an item!');
 
@@ -635,7 +633,7 @@ $(document).ready(function () {
 
             // enable the input of tab 2
             $('input.non_jewelry_input').removeAttr('disabled', 'disabled');
-            
+
             // disabled the input of tab 1
             $('input.jewelry_input').attr('disabled', 'disabled');
 
@@ -650,8 +648,7 @@ $(document).ready(function () {
             */
             $('.JewelryInput').hide();
             $('.NonJewelryInput').show();
-            $('input.JewelryInput').val('');
-            
+
         }
     });
 
@@ -664,19 +661,35 @@ $(document).ready(function () {
 
         var newInput = '';
         newInput += '<div class="newDivJewelry">'
+            newInput +='<div style="border-top:1px solid black; padding-bottom:15px;"></div>'
             newInput += '<div class="form-group row">'
                 newInput += '<label class="col-sm-3 col-form-label label-align">Jewelry Type</label>'
                 newInput += '<div class="col-sm-9">'
-                    newInput += '<div class="input-group mb-3">'
-                        newInput += '<input type="text" name="data[Item]['+ i +'][item_name]" class="form-control">'
-                        newInput += '<div class="input-group-append">'
-                            newInput += '<a class="btn btn-outline-danger" id="btnRemoveInputJewelry" style="cursor:pointer;">'
-                                newInput += '<i class="fa fa-remove">X</i>'
-                            newInput += '</a>'
-                        newInput += '</div>'
-                    newInput += '</div>'
+                    newInput += '<input type="text" name="data[TransactionItem]['+ i +'][item_name]" class="form-control">'
                 newInput += ' </div>'
             newInput += '</div>'
+
+            newInput += '<div class="form-group row">'
+                newInput += '<label class="col-sm-3 col-form-label label-align">Karat</label>'
+                newInput += '<div class="col-sm-9">'
+                    newInput += '<input type="text" name="data[TransactionItem]['+ i +'][karat]" class="form-control">'
+                newInput += ' </div>'
+            newInput += '</div>'
+
+            newInput += '<div class="form-group row">'
+                newInput += '<label class="col-sm-3 col-form-label label-align">Weight</label>'
+                newInput += '<div class="col-sm-9">'
+                    newInput += '<input type="text" name="data[TransactionItem]['+ i +'][weight]" class="form-control">'
+                newInput += ' </div>'
+            newInput += '</div>'
+
+            newInput += '<div class="form-group row">'
+                newInput += '<label class="col-sm-3 col-form-label label-align"></label>'
+                newInput += '<div class="col-sm-9">'
+                    newInput += '<div class="btn btn-danger" id="divRemoveInputJewelry">Remove</div>'
+                newInput += ' </div>'
+            newInput += '</div>'
+
         newInput += '</div>';
 
         $('div#nonDefaultDivJewelry').append(newInput);
@@ -684,7 +697,7 @@ $(document).ready(function () {
     });
 
     // Remove input for jewelry item, once clicked the x button.
-    $('div#nonDefaultDivJewelry').on('click', 'a#btnRemoveInputJewelry', function() {
+    $('div#nonDefaultDivJewelry').on('click', 'div#divRemoveInputJewelry', function() {
         $(this).closest('div.newDivJewelry').remove();
         i--;
     });
@@ -692,7 +705,7 @@ $(document).ready(function () {
     // End, input for jewelry
 
 
-    /* 
+    /*
      * Start, input for non jewelry
      * Once clicked the button, it will add new input for jewelry item
     */
@@ -701,19 +714,35 @@ $(document).ready(function () {
 
         var newInput = '';
         newInput += '<div class="newDivJewelryNot">'
+            newInput +='<div style="border-top:1px solid black; padding-bottom:15px;"></div>'
             newInput += '<div class="form-group row">'
                 newInput += '<label class="col-sm-3 col-form-label label-align">Item Type</label>'
                 newInput += '<div class="col-sm-9">'
-                    newInput += '<div class="input-group mb-3">'
-                        newInput += '<input type="text" name="data[Item]['+ x +'][item_name]" class="form-control">'
-                        newInput += '<div class="input-group-append">'
-                            newInput += '<a class="btn btn-outline-danger" id="btnRemoveInputJewelryNot" style="cursor:pointer;">'
-                                newInput += '<i class="fa fa-remove">X</i>'
-                            newInput += '</a>'
-                        newInput += '</div>'
-                    newInput += '</div>'
-                newInput += ' </div>'
+                    newInput += '<input type="text" name="data[TransactionItem]['+ x +'][item_name]" class="form-control">'
+                newInput += '</div>'
             newInput += '</div>'
+
+            newInput += '<div class="form-group row">'
+                newInput += '<label class="col-sm-3 col-form-label label-align">Brand</label>'
+                newInput += '<div class="col-sm-9">'
+                    newInput += '<input type="text" name="data[TransactionItem]['+ x +'][brand]" class="form-control">'
+                newInput += '</div>'
+            newInput += '</div>'
+
+            newInput += '<div class="form-group row">'
+                newInput += '<label class="col-sm-3 col-form-label label-align">Model</label>'
+                newInput += '<div class="col-sm-9">'
+                    newInput += '<input type="text" name="data[TransactionItem]['+ x +'][model]" class="form-control">'
+                newInput += '</div>'
+            newInput += '</div>'
+
+            newInput += '<div class="form-group row">'
+                newInput += '<label class="col-sm-3 col-form-label label-align"></label>'
+                newInput += '<div class="col-sm-9">'
+                    newInput += '<div class="btn btn-danger" id="divRemoveInputJewelryNot">Remove</div>'
+                newInput += '</div>'
+            newInput += '</div>'
+
         newInput += '</div>';
 
         $('div#nonDefaultDivJewelryNot').append(newInput);
@@ -721,12 +750,16 @@ $(document).ready(function () {
     });
 
     // Remove input for jewelry item, once clicked the x button.
-    $('div#nonDefaultDivJewelryNot').on('click', 'a#btnRemoveInputJewelryNot', function() {
+    $('div#nonDefaultDivJewelryNot').on('click', 'div#divRemoveInputJewelryNot', function() {
         $(this).closest('div.newDivJewelryNot').remove();
         x--;
     });
 
-    // End, input for non jewelry
+    /**
+     * End
+     * Trasactions contoller, create method
+     * This is for items input select
+    */
 
 
 
@@ -748,7 +781,7 @@ $(document).ready(function () {
      * This is input with id below will accept numbers only.
     */
   $('input.less_charge_amount, input.less_partial_amount, input.add_charge_amount').on('keyup blur', function(event) {
-		this.value = this.value.replace(/[^0-9]/g,''); 
+		this.value = this.value.replace(/[^0-9]/g,'');
 	});
 
 
@@ -756,24 +789,24 @@ $(document).ready(function () {
      * This is a computation for renew or redeem.
      * If status = redeem, it will add the remaining
      * principal to the total amount that need to pay by customer.
-     * 
+     *
      * If the status = renew, only the interest need to pay by the customer.
     */
-    
+
 
     $('#statusInputSelectPayment').change(function() {
         status = $(this).find(":selected").val();
-        
+
         if(status == 'redeemed') {
 
             $('div#div_add_principal_amount').show();
             $('input#add_principal_amount').removeAttr('disabled', 'disabled').attr('readonly', 'readonly');
 
-            var add_principal_amount = $('input#add_principal_amount').val();  
+            var add_principal_amount = $('input#add_principal_amount').val();
             totalPaymentRenewOrRedeem(add_principal_amount);
 
         } else if(status == 'renewed') {
-            
+
             $('div#div_add_principal_amount').hide();
             $('input#add_principal_amount').attr('disabled', 'disabled');
 
@@ -790,23 +823,23 @@ $(document).ready(function () {
     });
 
     /**
-     * Once the below keyup for the below IDs it fired, 
-     * it will invoke the function isRedeemedSelectedThenAdd(); 
+     * Once the below keyup for the below IDs it fired,
+     * it will invoke the function isRedeemedSelectedThenAdd();
     */
     $("input#less_charge_amount, input#less_partial_amount, input#add_charge_amount").on('keyup', function(event) {
         //alert('less charge');
-        isRedeemedSelectedThenAdd(); 
+        isRedeemedSelectedThenAdd();
     });
 
     function isRedeemedSelectedThenAdd() {
 
         if(status == 'redeemed') {
-            var add_principal_amount = $('input#add_principal_amount').val(); 
+            var add_principal_amount = $('input#add_principal_amount').val();
             totalPaymentRenewOrRedeem(add_principal_amount);
         }
 
         if(status == '') {
-          
+
           totalPaymentRenewOrRedeem(0);
         }
     }
@@ -834,7 +867,7 @@ $(document).ready(function () {
      * text field value the below input.
     */
     function makeValueEmpty() {
-      
+
       $('input#less_charge_amount').val('');
       $('input#less_partial_amount').val('');
       $('input#add_percent_amount').val('');
@@ -847,12 +880,12 @@ $(document).ready(function () {
     * Payment Interest Modal End
     */
 
-    
+
     $('#closeModalPayment').click(function() {
         makeValueEmpty();
         // location.reload();
     });
-	
+
   });
 </script>
 </body>

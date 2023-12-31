@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\BookInterest;
 use App\Models\Item;
 use App\Models\Customer;
 use App\Models\Transaction;
@@ -181,18 +182,42 @@ class TransactionsController extends Controller
         /*
         * Check if item array of name is not empty
         */
-        if(!is_null($itemsArray['Item'][1]['item_name'])) {
+        if(!is_null($itemsArray['TransactionItem'][1]['item_name'])) {
 
             $transaction_id = Transaction::create($transactionInfo)->id;
 
-            foreach($itemsArray['Item'] as $key => $value)
+            foreach($itemsArray['TransactionItem'] as $key => $value)
             {
-                $value = implode(" ",$value);
+                //$value = implode(" ",$value);
+                //dd($value);
+                if(!isset($value['brand']) && !isset($value['model'])) {
+                    $value['brand'] = 'n/a';
+                    $value['model'] = 'n/a';
+                }
+
+                if(!isset($value['karat']) && !isset($value['karat'])) {
+                    $value['karat'] = 'n/a';
+                    $value['karat'] = 'n/a';
+                }
+
+               // $request['transaction_id'] = $transaction_id;
+                //$request['item_name']      = $value['item_name'];
+                //$request['status']         = 'granted';
+
+                //TransactionItem::create($request->all());
+
 
                 $transactionItem = new TransactionItem();
                 $transactionItem->transaction_id = $transaction_id;
-                $transactionItem->item_name = $value;
+                $transactionItem->item_name      = $value['item_name'];
+                $transactionItem->karat          = $value['karat'];
+                $transactionItem->weight         = $value['weight'];
+                $transactionItem->brand          = $value['brand'];
+                $transactionItem->model          = $value['model'];
+                $transactionItem->status         = 'granted';
                 $transactionItem->save();
+
+
             }
         } else {
             return redirect()->route('customers.show', $request->input('customer_id'))->with(
@@ -258,6 +283,15 @@ class TransactionsController extends Controller
 						'items.*'
 				]);
 			},
+            'book'=>function($query) {
+				$query->select([
+						'books.*'
+				])->with([
+                    'book_interests' => function($query) {
+                        $query->select('book_interests.*');
+                    }
+                ]);
+			},
             'user'=>function($query) {
                 $query->select([
                     'users.*'
@@ -266,6 +300,8 @@ class TransactionsController extends Controller
 		])
 		->where('id', $id)
 		->get();
+
+        // dd($transactions);
 
         $transactions = $this->formatDateDiff($transactions);
         return view('transactions.show', [

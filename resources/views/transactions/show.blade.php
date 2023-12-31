@@ -19,6 +19,8 @@
             <div class="card-header">
                 <ul class="nav nav-pills" id="transaction_show">
                     <li class="nav-item"><a class="nav-link active" href="#home" data-toggle="tab">Details</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#book_details" data-toggle="tab">Book <span class="text-bold">{{$transactions->book_id}}</span> Details</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#book_interest_details" data-toggle="tab">Book Interest Details</a></li>
                     <li class="nav-item"><a class="nav-link" href="#information" data-toggle="tab">Customer Info</a></li>
                     <li class="nav-item">
                         <a href="{{ route('prints.print_transaction',$transactions->id) }}" target="_blank" class="nav-link">
@@ -281,6 +283,36 @@
                         <!-- end interest table -->
 
 
+					</div>
+
+                    <div class="tab-pane fade" id="book_details">
+                        @include('inc.book_details_show', ['book'=> $transactions->book])
+					</div>
+
+                    <div class="tab-pane fade" id="book_interest_details">
+                        <div class="table-responsive">
+                            <p>Book {{$transactions->book_id}} interest details.</p>
+                            <table id="" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Book Id</th>
+                                        <th>Month</th>
+                                        <th>percent Interest</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($transactions->book->book_interests as $keyBookInterest => $valueBookInterest)
+                                        <tr>
+                                            <td>{{ $valueBookInterest->book_id}}</td>
+                                            <td>{{ $valueBookInterest->month }}</td>
+                                            <td>{{ $valueBookInterest->percent_interest }}</td>
+                                            <td>{{ $valueBookInterest->details }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 					</div>
 
 					<div class="tab-pane fade" id="information">

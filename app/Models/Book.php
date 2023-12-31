@@ -13,6 +13,10 @@ class Book extends Model
     protected $guarded = [];
 
     public function book_interests() {
-        return $this->hasMany(BookInterests::class);
+        return $this->hasMany(BookInterest::class);
+    }
+
+    public function transactions() {
+        return $this->hasMany(Transaction::class);
     }
 }

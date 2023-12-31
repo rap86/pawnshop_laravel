@@ -19,15 +19,12 @@ return new class extends Migration
             $table->unsignedInteger('book_id');
             $table->unsignedInteger('item_id');
             $table->unsignedInteger('branch_id');
-            $table->string('interest_by', 10);
+            $table->string('interest_used', 10);
             $table->string('bir');
-            $table->string('brand')->nullable();
-            $table->string('model')->nullable();
-            $table->string('karat')->nullable();
-            $table->string('weight')->nullable();
             $table->unsignedInteger('gross_amount')->nullable();
             $table->unsignedInteger('net_amount')->nullable();
             $table->unsignedInteger('net_amount_duplicate')->nullable();
+            $table->unsignedInteger('first_month_interest_amount')->nullable();
             $table->string('status')->nullable();
             $table->string('details', 255)->nullable();
             $table->string('image_name',1000)->nullable();

@@ -11,7 +11,6 @@
             <input type="hidden" id="customerPhoto" name="image_name"  value="{{ old('image_name') }}"/>
             <input type="hidden" name="customer_id" value="{{ $customer->id }}"/>
             <input type="hidden" name="status" value="granted"/>
-            <input type="hidden" name="branch_id" value="1"/>
 
             <div class="card card-secondary card-outline">
                 <div class="card-header">
@@ -27,13 +26,24 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label label-align">Interest Used</label>
+                                        <label class="col-sm-3 col-form-label label-align">Interest by</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control" name="interest_used" id="interest_used" style="background-color:#e9ecef;">
+                                            <select class="form-control" name="interest_by" id="interest_by" style="pointer-events: none; background-color:#e9ecef;">
                                                 <option value="book">book</option>
                                                 @if(auth()->user()->role == "admin")
                                                     <option value="item">item</option>
                                                 @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label label-align">Branch</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="branch_id" style="pointer-events: none; background-color:#e9ecef;">
+                                                <option></option>
+                                                <option value=1 selected>Talavera</option>
+                                                <option value=2>Cabiao</option>
+                                                <option value=3>Guimba</option>
                                             </select>
                                         </div>
                                     </div>
@@ -71,12 +81,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label label-align">Interest Amount</label>
-                                        <div class="col-sm-8">
-                                            <input type="number" name="first_month_interest_amount" value="{{ old('first_month_interest_amount') }}" class="form-control" id="first_month_interest_amountId" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label class="col-sm-3 col-form-label label-align">Id Presented</label>
                                         <div class="col-sm-8">
                                             <input type="text" name="id_presented" value="{{ old('id_presented') }}" class="form-control" autocomplete="off">
@@ -94,7 +98,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label label-align">
                                             <i class="fa fa-circle itemCircle" style="font-size: 18px;"></i>
-                                            Item Type
+                                            Item 
                                         </label>
                                         <div class="col-sm-9">
                                             <select class="form-control" name="item_id" id="itemInput">
@@ -105,6 +109,44 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group row NonJewelryInput" style="display:none;">
+                                        <label class="col-sm-3 col-form-label label-align">
+                                            <i class="fa fa-circle itemCircle" style="font-size: 18px;"></i>
+                                            Brand
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="brand" value="{{ old('brand') }}" class="form-control NonJewelryInput" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row NonJewelryInput" style="display:none;">
+                                        <label class="col-sm-3 col-form-label label-align">
+                                            <i class="fa fa-circle itemCircle" style="font-size: 18px;"></i>
+                                            Model
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="model" value="{{ old('model') }}" class="form-control NonJewelryInput" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row JewelryInput" style="display:none;">
+                                        <label class="col-sm-3 col-form-label label-align">
+                                            <i class="fa fa-circle itemCircle" style="font-size: 18px;"></i>
+                                            Karat 
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="karat" value="{{ old('karat') }}" class="form-control JewelryInput" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row JewelryInput" style="display:none;">
+                                        <label class="col-sm-3 col-form-label label-align">
+                                            <i class="fa fa-circle itemCircle" style="font-size: 18px;"></i>
+                                            Weight
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="weight" value="{{ old('weight') }}" class="form-control JewelryInput" autocomplete="off">
+                                        </div>
+                                    </div>
+
+                                    
                                     <div class="x_content">
                                         <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
                                             <li class="nav-item">
@@ -114,7 +156,7 @@
                                                 <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">Non-jewelry</a>
                                             </li>
                                         </ul>
-
+                                        
                                         <div class="tab-content" id="myTabContent">
                                             <div class="tab-pane fade show active" id="one" role="tabpanel" aria-labelledby="one-tab">
                                                 <br>
@@ -126,28 +168,18 @@
                                                         </a>
                                                     </div>
                                                     <div class="card-body">
-                                                        <div id="defaultDivJewelry">
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label label-align">Jewelry Type</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control jewelry_input" name="data[TransactionItem][1][item_name]">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label label-align">Karat</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control jewelry_input" name="data[TransactionItem][1][karat]">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label label-align">Weight</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control jewelry_input" name="data[TransactionItem][1][weight]">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label label-align">Jewelry Type</label>
+                                                            <div class="col-sm-9">
+                                                                <div id="defaultDivJewelry">
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control jewelry_input" name="data[Item][1][item_name]">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div id="nonDefaultDivJewelry">
-
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -162,28 +194,19 @@
                                                         </a>
                                                     </div>
                                                     <div class="card-body">
-                                                        <div id="defaultDivJewelryNot">
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label label-align">Item Type</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control non_jewelry_input" name="data[TransactionItem][1][item_name]">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label label-align">Brand</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control non_jewelry_input" name="data[TransactionItem][1][brand]">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-3 col-form-label label-align">Model</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control non_jewelry_input" name="data[TransactionItem][1][model]">
+
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label label-align">Item Type</label>
+                                                            <div class="col-sm-9">
+                                                                <div id="defaultDivJewelryNot">
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="text" class="form-control non_jewelry_input" name="data[Item][1][item_name]">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div id="nonDefaultDivJewelryNot">
-
+                                                            
                                                         </div>
 
                                                     </div>
@@ -204,7 +227,7 @@
                                         <div class="card-body box-profile border">
                                             <center>
                                                 <div class="w3-container" style="min-height:300px;" id="results">
-
+                                                    
                                                 </div>
                                             </center>
                                         </div>
@@ -239,16 +262,16 @@
                     </div>
                 </div>
                 <div class="card-footer border">
-                    <div class="btn btn-primary" id="btnConfirmationForNewRecord">
-                        <i class="fa fa-save"></i>
-                        Save
-                    </div>
                     <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-danger pull-right">
                         <i class="fa fa-times"></i>
                         Cancel
                     </a>
+                    <div class="btn btn-primary" id="btnConfirmationForNewRecord">
+                        <i class="fa fa-save"></i>
+                        Save
+                    </div>
                 </div>
-            </div>
+            </div>   
         </form>
     </div>
 </div>
@@ -262,7 +285,7 @@ Webcam.set({
 	jpeg_quality: 95
 });
 Webcam.attach( '#my_camera' );
-
+	
 function take_snapshot() {
 		// take snapshot and get image data
 		Webcam.snap( function(data_uri) {
@@ -276,20 +299,19 @@ function take_snapshot() {
 
 <script>
 $(document).ready(function () {
-
+    
     /**
      * This is for new granted transaction
     */
     $('#bookId').change(function() {
         $('#grossAmountId').val('');
         $('#netAmountId').val('');
-        $('#first_month_interest_amountId').val('');
     });
 
     $('#grossAmountId').keyup(function() {
 
         var book_id = Number($("#bookId").find(":selected").val());
-
+        
         if(book_id === 1) {
             deduct_first_month = "{{ $books[0]->deduct_first_month }}";
             if(deduct_first_month == "no") {
@@ -298,7 +320,6 @@ $(document).ready(function () {
                 total_interest = {{ $books[0]->first_month_interest }} + {{ $books[0]->doc_stamp_interest }};
                 amount = ( total_interest / 100 ) * $(this).val();
                 $('#netAmountId').val(Math.floor( $(this).val() - amount.toFixed(2) - {{ $books[0]->service_charge_granted }} ));
-                $('#first_month_interest_amountId').val($(this).val() - $('#netAmountId').val());
             }
         }
 
@@ -310,7 +331,6 @@ $(document).ready(function () {
                 total_interest = {{ $books[1]->first_month_interest }} + {{ $books[1]->doc_stamp_interest }};
                 amount = ( total_interest / 100 ) * $(this).val();
                 $('#netAmountId').val(Math.floor( $(this).val() - amount.toFixed(2) - {{ $books[1]->service_charge_granted }} ));
-                $('#first_month_interest_amountId').val($(this).val() - $('#netAmountId').val());
             }
         }
 
@@ -322,7 +342,6 @@ $(document).ready(function () {
                 total_interest = {{ $books[2]->first_month_interest }} + {{ $books[2]->doc_stamp_interest }};
                 amount = ( total_interest / 100 ) * $(this).val();
                 $('#netAmountId').val(Math.floor( $(this).val() - amount.toFixed(2) - {{ $books[2]->service_charge_granted }} ));
-                $('#first_month_interest_amountId').val($(this).val() - $('#netAmountId').val());
             }
         }
 

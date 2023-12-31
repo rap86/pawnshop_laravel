@@ -21,7 +21,7 @@
                     </ul>
                 </div>
                 <div class="card-body">
-                    
+
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="row">
@@ -32,7 +32,7 @@
                                                 <label class="col-form-label col-md-3 label-align" for="first-name">First Name <span class="required"></span>
                                                 </label>
                                                 <div class="col-md-9">
-                                                    <input type="text" id="first-name" name="first_name" class="form-control" autocomplete="off" value="{{ $customer->first_name }}"> 
+                                                    <input type="text" id="first-name" name="first_name" class="form-control" autocomplete="off" value="{{ $customer->first_name }}">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="camera" role="tabpanel" aria-labelledby="camera-tab">
-                            
+
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="w3-card-4">
@@ -117,7 +117,7 @@
                                         <div class="card-body box-profile border">
                                             <center>
                                                 <div class="w3-container" style="min-height:300px;" id="results">
-                                                    
+
                                                 </div>
                                             </center>
                                         </div>
@@ -148,14 +148,14 @@
                     </div>
                 </div>
                 <div class="card-footer border">
-                    <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-danger">
-                        <i class="fa fa-times"></i>
-                        Cancel
-                    </a>
                     <div class="btn btn-primary" id="btnConfirmationForNewRecord">
                         <i class="fa fa-edit"></i>
                         Save
                     </div>
+                    <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-danger">
+                        <i class="fa fa-times"></i>
+                        Cancel
+                    </a>
                 </div>
             </div>
         </form>
@@ -170,7 +170,7 @@ Webcam.set({
 	jpeg_quality: 95
 });
 Webcam.attach( '#my_camera' );
-	
+
 function take_snapshot() {
 		// take snapshot and get image data
 		Webcam.snap( function(data_uri) {

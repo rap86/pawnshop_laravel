@@ -17,7 +17,12 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('transaction_id');
             $table->string('item_name');
+            $table->string('karat')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('model')->nullable();
             $table->string('status')->nullable();
+            $table->string('details')->nullable();
             $table->timestamps();
 
             $table->index('transaction_id');

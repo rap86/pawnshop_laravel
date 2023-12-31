@@ -12,14 +12,9 @@
     @php $thisColor = 'dark'; @endphp
 @endif
 
-<div class="col-lg-12 col-md-12 col-sm-12 pb-3">
+<div class="col-lg-6 col-md-6 col-sm-6 pb-3">
     <div class="card-header bg-{{ $thisColor }}">
-        Date Granted: {{ date('M j, Y',strtotime($transactions->created_at)) }}
-        <span class="float-right">
-            @if(isset($transactions->user->name))
-                Encoded by : {{ $transactions->user->name }}
-            @endif
-        </span>
+        Book : {{ $transactions->book_id }} | BIR : <span style="text-transform:uppercase;">{{ $transactions->bir }}</span> | Date Granted: {{ date('M j, Y',strtotime($transactions->created_at)) }}
     </div>
     <div class="table-responsive">
         <table class="table table-striped border-bottom border-left border-right">
@@ -27,54 +22,24 @@
                 <td rowspan="5" width="20%;">
                     <img class="" width="100%;" src="/storage/image_item/{{ $transactions->image_name }}" />
                 </td>
-                <td width="15%;">BIR</td>
-                <td width="15%;">{{ $transactions->bir }}</td>
-                <td width="15%;">Item</td>
-                <td width="35%;">{{ $transactions->item->name }}</td>
+                <td width="15%;" class="text-bold">Interest Used</td>
+                <td width="15%;">{{ $transactions->interest_used }}</td>
             </tr>
             <tr>
-                <td>Book</td>
-                <td>{{ $transactions->book_id }}</td>
-                <td>Type</td>
-                <td>
-                    @if($transactions->transaction_items)
-                        @foreach($transactions->transaction_items as $keyItem => $valueItem)
-                            <input type="checkbox">
-                            {{ $valueItem->item_name }} &emsp;
-                        @endforeach
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <td>Gross</td>
+                <td class="text-bold">Gross</td>
                 <td>{{ $transactions->gross_amount }}</td>
-
-                @if($transactions->item->jewelry == 'yes')
-                    <td>Karat</td>
-                    <td>{{ $transactions->karat }}</td>
-                @else
-                    <td>Brand</td>
-                    <td>{{ $transactions->brand }}</td>
-                @endif
             </tr>
             <tr>
-                <td>Net</td>
+                <td class="text-bold">Net</td>
                 <td>{{ $transactions->net_amount }}</td>
-
-                @if($transactions->item->jewelry == 'yes')
-                    <td>Weight</td>
-                    <td>{{ $transactions->weight }}</td>
-                @else
-                    <td>Brand</td>
-                    <td>{{ $transactions->model }}</td>
-                @endif
-
             </tr>
             <tr>
-                <td>Branch ID</td>
-                <td>{{ $transactions->branch_id }}</td>
-                <td>Interest by</td>
-                <td></td>
+                <td class="text-bold">Net Duplicate</td>
+                <td>{{ $transactions->net_amount_duplicate }}</td>
+            </tr>
+            <tr>
+                <td class="text-bold">1st Mon Interest</td>
+                <td>{{ $transactions->first_month_interest_amount }}</td>
             </tr>
             <tr>
                 <td>
@@ -83,9 +48,59 @@
                         View
                     </a>
                 </td>
-                <td>Details</td>
-                <td colspan="3">{{ $transactions->remarks }}</td>
+                <td class="text-bold">Details</td>
+                <td>{{ $transactions->remarks }}</td>
             </tr>
         </table>
     </div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-6 pb-3">
+    <div class="card-header bg-{{ $thisColor }}">
+            @if(isset($transactions->user->name))
+                Encoded by : {{ $transactions->user->name }}
+            @endif
+        </span>
+    </div>
+    <table class="table table-striped border-bottom border-left border-right">
+        <tr>
+            <th>Item Type</th>
+
+            @if($transactions->item->jewelry == 'yes')
+                <th>Karat</th>
+                <th>Weight</th>
+            @else
+                <th>Brand</th>
+                <th>Model</th>
+            @endif
+
+            <th>Status</th>
+        </tr>
+        @if($transactions->transaction_items)
+            @foreach($transactions->transaction_items as $keyItem => $valueItem)
+                <tr>
+                    <td>{{ $valueItem->item_name  }}</td>
+
+                    @if($transactions->item->jewelry == 'yes')
+                        <td>{{ $valueItem->karat  }}</td>
+                        <td>{{ $valueItem->weight  }}</td>
+                    @else
+                        <td>{{ $valueItem->brand  }}</td>
+                        <td>{{ $valueItem->model  }}</td>
+                    @endif
+
+                    <td>{{ $valueItem->status  }}</td>
+                </tr>
+            @endforeach
+        @endif
+    </table>
+    <table class="table table-striped border-bottom border-left border-right">
+        <tr>
+            <th class="bg-green">Amount to pay for Renew</th>
+            <th class="bg-blue">Amount to pay for Redeem</th>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>500</td>
+        </tr>
+    </table>
 </div>
