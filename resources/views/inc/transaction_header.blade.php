@@ -99,8 +99,8 @@
             <th class="bg-blue">Amount to pay for Redeem</th>
         </tr>
         <tr>
-            <td>100</td>
-            <td>500</td>
+            <td>100x</td>
+            <td>500x</td>
         </tr>
     </table>
 </div>
