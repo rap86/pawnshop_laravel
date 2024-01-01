@@ -134,7 +134,7 @@ $books = array(
                     <table class="dataTables table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>IDs</th>
+                                <th>ID</th>
                                 <th>Granted</th>
                                 <th>PT</th>
                                 <th>Date</th>
