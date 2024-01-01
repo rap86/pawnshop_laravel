@@ -197,7 +197,7 @@ class TransactionsController extends Controller
 
                 if(!isset($value['karat']) && !isset($value['karat'])) {
                     $value['karat'] = 'n/a';
-                    $value['karat'] = 'n/a';
+                    $value['weight'] = 'n/a';
                 }
 
                // $request['transaction_id'] = $transaction_id;

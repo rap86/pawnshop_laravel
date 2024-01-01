@@ -11,19 +11,19 @@
                 margin-left:40px;
                 margin-right:40px;
                 margin-header:4%;
-                margin-footer:3%;	
+                margin-footer:3%;
             }
 		</style>
 	</head>
 	<body>
 		<htmlpageheader name="myHTMLHeader1">
-		
+
 			<p style="font-family:arial;">Status : {{ $status }} | Book {{ $book_id }} | Coverage : {{  date('M j, Y',strtotime($date_from)) }} - {{  date('M j, Y',strtotime($date_to)) }}</p>
-			
+
 		</htmlpageheader>
-		
+
 		<sethtmlpageheader name="myHTMLHeader1" value="on" show-this-page="1" />
-		
+
 			<table border="1" style="width:100%; border-collapse:collapse; font-family:arial; font-size:12px; text-align:center;" cellpadding="5">
                 <tr>
                     <th>ID</th>
@@ -33,8 +33,8 @@
                     <th>Customer</th>
                     <th>Item</th>
                     <th>Type</th>
-                    <th>BRN * KRT</th>
-                    <th>MDL * WGT</th>
+                    <th>BRN : MDL</th>
+                    <th>KRT : WGT</th>
                     <th>Details</th>
                 </tr>
                 @php $grandTotal = 0 @endphp
@@ -45,46 +45,61 @@
                     <tr>
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->net_amount_duplicate }}</td>
-                        <td>{{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->ptnumber }}</td>
+                        <td>
+                            @if(!isset($value->transaction_payments[0]))
+                                No PT
+                            @else
+                            {{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->ptnumber }}
+                            @endif
+                        </td>
                         <td>{{  date('M j, Y',strtotime($value->created_at)) }}</td>
                         <td>
                             {{ $value->customer->first_name }}
                             {{ $value->customer->middle_name }}
-                            {{ $value->customer->last_name }}  
+                            {{ $value->customer->last_name }}
                         </td>
                         <td>{{ $value->item->name }} </td>
                         <td>
                         @if($value->transaction_items)
                             @foreach($value->transaction_items as $keyItem => $valueItem)
-                                <i class="fa fa-circle text-danger" style="font-size: 12px;"></i>
-                                {{ $valueItem->item_name }} &emsp; 
+                                "{{ $valueItem->item_name }}"
                             @endforeach
-                        @endif 
+                        @endif
                         </td>
                         <td>
-                            {{ $value->brand }} 
-                            *
-                            {{ $value->karat }} 
+                            @if($value->transaction_items)
+                                @foreach($value->transaction_items as $keyItem => $valueItem)
+
+                                    @if ($value->item->jewelry == "no")
+                                        "{{ $valueItem->brand }}:{{ $valueItem->model }}"
+                                    @endif
+                                @endforeach
+                            @endif
                         </td>
                         <td>
-                            {{ $value->model }} 
-                            *
-                            {{ $value->weight }} 
+                            @if($value->transaction_items)
+                                @foreach($value->transaction_items as $keyItemKarat => $valueItemKarat)
+
+                                    @if ($value->item->jewelry == "yes")
+                                        "{{ $valueItemKarat->karat }}:{{ $valueItemKarat->weight }}"
+                                    @endif
+                                @endforeach
+                            @endif
                         </td>
-                        <td>{{ $value->remarks }}</td>
+                        <td>{{ $value->details }}</td>
                     </tr>
                 @endforeach
             </table>
             <div style="padding-top: 10px; font-size:16px;;">
                 <b>Grand total:</b> {{ number_format($grandTotal, 2) }}
             </div>
-		
+
 		<htmlpagefooter name="myHTMLFooter1">
-			
-			<p style="border-top: 1px solid; black;">Page: {PAGENO} of {nbpg}</p>	
-		
+
+			<p style="border-top: 1px solid; black;">Page: {PAGENO} of {nbpg}</p>
+
 		</htmlpagefooter>
-		
+
 		<sethtmlpagefooter name="myHTMLFooter1" value="on" show-this-page="1" />
 	</body>
 </html>

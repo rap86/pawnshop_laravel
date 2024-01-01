@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\DB;
 class ReportsController extends Controller
 {
     public function report_granted(Request $request) {
-        
+
+       // dd($request);
         if(!empty($request->input('book_id'))  && !empty($request->input('status')) && !empty($request->input('date_from')) && !empty($request->input('date_to')) ) {
-            
+
             $book_id = $request->input('book_id');
             $status = $request->input('status');
             $date_from = $request->input('date_from');
@@ -54,26 +55,26 @@ class ReportsController extends Controller
             ->whereDate('created_at', '>=', $date_from)
             ->whereDate('created_at', '<=', $date_to)
 			->get();
-    
-            // dd($transactions);
+
+           // dd($transactions);
 
             return view('reports.report_granted', [
                 'transactions' => $transactions,
                 'book_id' => $book_id,
                 'status' => $status,
                 'date_from' => $date_from,
-                'date_to' => $date_to,
+                'date_to' => $date_to
             ]);
 
         } else {
             return view('reports.report_granted');
-        }   
+        }
     }
 
     public function report_collected(Request $request) {
-    
+
         if(!empty($request->input('status')) && !empty($request->input('book_id'))) {
-            
+
             $where[] = ['status', '=', $request->input('status')];
             $where[] = ['book_id', '=', $request->input('book_id')];
 
@@ -95,7 +96,7 @@ class ReportsController extends Controller
             ])
             ->where($where)
             ->get();
-    
+
             //dd($transactions);
             return view('reports.report_collected', [
                 'transactions' => $transactions,
@@ -105,6 +106,6 @@ class ReportsController extends Controller
 
         } else {
             return view('reports.report_collected');
-        }   
+        }
     }
 }

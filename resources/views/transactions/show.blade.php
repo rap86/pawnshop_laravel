@@ -20,7 +20,7 @@
                 <ul class="nav nav-pills" id="transaction_show">
                     <li class="nav-item"><a class="nav-link active" href="#home" data-toggle="tab">Details</a></li>
                     <li class="nav-item"><a class="nav-link" href="#book_details" data-toggle="tab">Book <span class="text-bold">{{$transactions->book_id}}</span> Details</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#book_interest_details" data-toggle="tab">Book Interest Details</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#book_interest_details" data-toggle="tab">Book <span class="text-bold">{{$transactions->book_id}}</span> Interest Details</a></li>
                     <li class="nav-item"><a class="nav-link" href="#information" data-toggle="tab">Customer Info</a></li>
                     <li class="nav-item">
                         <a href="{{ route('prints.print_transaction',$transactions->id) }}" target="_blank" class="nav-link">
@@ -45,9 +45,8 @@
                                         @csrf
                                         <input type="hidden" name="_method" value="DELETE" />
 
-                                        <div class="btn btn-danger btn-block mb-2" id="btnConfirmationForNewRecord" data-text-message="delete" style="cursor:pointer;">
-                                            If you seeing this text, meaning you can delete this transaction.
-                                            Click me, if you want to delete this transaction.
+                                        <div class="btn btn-warning btn-block mb-2" id="btnConfirmationForNewRecord" data-text-message="delete" style="cursor:pointer;">
+                                            For wrong input, click me if you want to delete this transaction.
                                         </div>
                                     </form>
                                 </div>

@@ -49,7 +49,7 @@
                     </a>
                 </td>
                 <td class="text-bold">Details</td>
-                <td>{{ $transactions->remarks }}</td>
+                <td>{{ $transactions->details }}</td>
             </tr>
         </table>
     </div>

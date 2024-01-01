@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<?php 
+<?php
 $transactionStatus = array(
     array(
         'id' => 'granted',
@@ -118,16 +118,16 @@ $books = array(
                                 @else
                                     <a href="#" class="btn btn-secondary btn-block">
                                         <i class="fa fa-print"></i>
-                                    </a> 
+                                    </a>
                                 @endif
                             </div>
                         </div>
                     </div>
-                </form>    
+                </form>
             </div>
-        </div>    
+        </div>
     </div>
-    <div class="card-body">        
+    <div class="card-body">
         <div class="col-lg-12">
             <div class="table-responsive">
                 @if(isset($transactions))
@@ -141,8 +141,8 @@ $books = array(
                                 <th>Customer</th>
                                 <th>Item</th>
                                 <th>Type</th>
-                                <th>BRN * KRT</th>
-						        <th>MDL * WGT</th>
+                                <th>BRN : MDL</th>
+                                <th>KRT : WGT</th>
                                 <th>Details</th>
                             </tr>
                         </thead>
@@ -151,36 +151,56 @@ $books = array(
                             @php $grandTotal += $value->net_amount_duplicate @endphp
                             <tr>
                                 <td>
-                                    <a href="{{ route('transactions.show', $value->id) }}" class="btn btn-default btn-sm last" target="_blank">{{ $value->id }}</a>    
+                                    <a href="{{ route('transactions.show', $value->id) }}" class="btn btn-default btn-sm last" target="_blank">{{ $value->id }}</a>
                                 </td>
                                 <td>{{ $value->net_amount_duplicate }}</td>
-                                <td>{{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->ptnumber }}</td>
+                                <td>
+
+                                    @if(!isset($value->transaction_payments[0]))
+                                        No PT
+                                    @else
+                                    {{ $value->transaction_payments[ count($value->transaction_payments) -1 ]->ptnumber }}
+                                    @endif
+
+                                </td>
                                 <td>{{  date('M j, Y',strtotime($value->created_at)) }}</td>
                                 <td>
                                     {{ $value->customer->first_name }}
                                     {{ $value->customer->middle_name }}
-                                    {{ $value->customer->last_name }}  
+                                    {{ $value->customer->last_name }}
                                 </td>
                                 <td>{{ $value->item->name }} </td>
                                 <td>
-                                @if($value->transaction_items)
-                                    @foreach($value->transaction_items as $keyItem => $valueItem)
-                                        <i class="fa fa-circle text-danger" style="font-size: 12px;"></i>
-                                        {{ $valueItem->item_name }} &emsp; 
-                                    @endforeach
-                                @endif 
+
+                                    @if($value->transaction_items)
+                                        @foreach($value->transaction_items as $keyItem => $valueItem)
+                                            <i class="fa fa-circle text-danger" style="font-size: 12px;"></i>
+                                            {{ $valueItem->item_name }} &emsp;
+                                        @endforeach
+                                    @endif
+
                                 </td>
                                 <td>
-                                    {{ $value->brand }} 
-                                    *
-                                    {{ $value->karat }} 
+                                    @if($value->transaction_items)
+                                        @foreach($value->transaction_items as $keyItem => $valueItem)
+
+                                            @if ($value->item->jewelry == "no")
+                                                "{{ $valueItem->brand }}:{{ $valueItem->model }}"
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </td>
                                 <td>
-                                    {{ $value->model }} 
-                                    *
-                                    {{ $value->weight }} 
+                                    @if($value->transaction_items)
+                                        @foreach($value->transaction_items as $keyItemKarat => $valueItemKarat)
+
+                                            @if ($value->item->jewelry == "yes")
+                                                "{{ $valueItemKarat->karat }}:{{ $valueItemKarat->weight }}"
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </td>
-                                <td>{{ $value->remarks }}</td>
+                                <td>{{ $value->details }}</td>
                             </tr>
                         @endforeach
                     </table>
