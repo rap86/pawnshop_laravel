@@ -97,7 +97,9 @@
         <tr>
             <th>
                 <div class="btn btn-block btn-success" data-toggle="modal" data-target=".renew-redeem-modal-lg">Amount to pay for Renew</div>
-                @include('inc.modal_payment_test')
+                @include('inc.modal_payment_test',[
+                    'status' => 'renewx'
+                ])
             </th>
             <th>
                 <div class="btn btn-block btn-primary" data-toggle="modal" data-target=".renew-redeem-modal-lg">Amount to pay for Redeem</div>

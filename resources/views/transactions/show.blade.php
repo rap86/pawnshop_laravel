@@ -31,6 +31,8 @@
             </div>
             <div class="card-body">
 				<div class="tab-content">
+
+                    <!--Details Tab Start-->
 					<div class="active tab-pane" id="home">
 
                             <!--
@@ -180,17 +182,20 @@
                                                     <td class="text-bold">ID</td>
                                                     <td class="text-bold">PT No.</td>
                                                     <td class="text-bold">Start Date</td>
-                                                    <td class="text-bold">Interest %</td>
-                                                    <td class="text-bold">S Charge</td>
-                                                    <td class="text-bold">Interest A</td>
-                                                    <td class="text-bold">Partial A.</td>
-                                                    <td class="text-bold">Principal A. </td>
+                                                    <td class="text-bold">- Charge</td>
+                                                    <td class="text-bold">- Partial</td>
+                                                    <td class="text-bold">Interest</td>
+                                                    <td class="text-bold">Interest A.</td>
+                                                    <td class="text-bold">Service C.</td>
+                                                    <td class="text-bold">+ Charge</td>
+                                                    <td class="text-bold">Principal A.</td>
                                                     <td class="text-bold">Total</td>
                                                     <td class="text-bold">End Date</td>
                                                     <td class="text-bold">Paid</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
+
                                                 @foreach($transactions->transaction_payments as $keyPayments => $valuePayments)
 
                                                     @php
@@ -221,24 +226,20 @@
                                                         </td>
                                                         <td>{{ date('M j, Y',strtotime($valuePayments->payment_startdate)) }} |
 
+                                                        <!--
                                                             Y{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['year'] }}
                                                             M{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['month'] }}
                                                             D{{ $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['day'] }}
+                                                        -->
+
+                                                            Y{{ $valuePayments->diff_days['date']['year'] }}
+                                                            M{{ $valuePayments->diff_days['date']['month'] }}
+                                                            D{{ $valuePayments->diff_days['date']['day'] }}
 
                                                         </td>
                                                         <td>
-                                                            @if($valuePayments->percent_interest != false)
-                                                                {{ $valuePayments->percent_interest }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($valuePayments->add_service_charge != false)
-                                                                {{ $valuePayments->add_service_charge }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($valuePayments->add_percent_amount != false)
-                                                                {{ $valuePayments->add_percent_amount }}
+                                                            @if($valuePayments->less_charge_amount != false)
+                                                                {{ $valuePayments->less_charge_amount }}
                                                             @endif
                                                         </td>
                                                         <td>
@@ -247,8 +248,28 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if($valuePayments->less_principal_amount != false)
-                                                                {{ $valuePayments->less_principal_amount }}
+                                                            @if($valuePayments->percent_interest != false)
+                                                                {{ $valuePayments->percent_interest }} Month(s)
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($valuePayments->add_percent_amount != false)
+                                                                {{ $valuePayments->add_percent_amount }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($valuePayments->add_service_charge != false)
+                                                                {{ $valuePayments->add_service_charge }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($valuePayments->add_charge_amount != false)
+                                                                {{ $valuePayments->add_charge_amount }}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($valuePayments->add_principal_amount != false)
+                                                                {{ $valuePayments->add_principal_amount }}
                                                             @endif
                                                         </td>
                                                         <td>
@@ -280,14 +301,16 @@
                             </div>
                         </div>
                         <!-- end interest table -->
-
-
 					</div>
+                    <!--Details Tab End-->
 
+                    <!--Book Details Tab Start-->
                     <div class="tab-pane fade" id="book_details">
                         @include('inc.book_details_show', ['book'=> $transactions->book])
 					</div>
+                    <!--Book Details Tab End-->
 
+                    <!--Book Interest Details Tab Start-->
                     <div class="tab-pane fade" id="book_interest_details">
                         <div class="table-responsive">
                             <p>Book {{$transactions->book_id}} interest details.</p>
@@ -301,7 +324,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                    @php
+                                        $Year  = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['year'];
+                                        $Month = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['month'];
+                                        $Day   = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['day'];
+                                    @endphp
+
                                     @foreach($transactions->book->book_interests as $keyBookInterest => $valueBookInterest)
+
+                                        @php
+                                            $amount_to_pay_initial  = round(($valueBookInterest->percent_interest / 100) * $transactions->net_amount, 0);
+                                            $amount_to_pay_full     = $amount_to_pay_initial + $transactions->book->service_charge_renew;
+
+                                        @endphp
+
+
+                                        @if ($valueBookInterest->month == $Month )
+                                            @php
+                                                $percent_interest = $valueBookInterest->month;
+                                            @endphp
+                                            {{ $amount_to_pay_full}}
+                                        @endif
+
                                         <tr>
                                             <td>{{ $valueBookInterest->book_id}}</td>
                                             <td>{{ $valueBookInterest->month }}</td>
@@ -313,10 +358,13 @@
                             </table>
                         </div>
 					</div>
+                    <!--Book Interest Details Tab End-->
 
+                    <!--Customer Info Tab Start-->
 					<div class="tab-pane fade" id="information">
 						@include('inc.customer_info', ['customer'=> $transactions->customer, 'clickable'=>'false', 'visible'=>'yes'])
 					</div>
+                    <!--Customer Info Tab End-->
 				</div>
             </div>
 
@@ -374,6 +422,13 @@
                             'net_amount'      => $transactions->net_amount
                             ])
                     </div>
+
+                    <!--Computation for renew and redeem start-->
+
+
+
+                    <!--Computation for renew and redeem end-->
+
                     @if(isset($payment_transaction_id_last))
                     <div class="col-md-2 col-lg-2 pb-2">
                         <div class="btn btn-dark btn-block" data-toggle="modal" data-target=".interest-payment-modal-lg">
@@ -383,7 +438,10 @@
                         @include('inc.modal_payment', [
                             'transaction_id'                => $transactions->id,
                             'payment_transaction_id_last'   => $payment_transaction_id_last,
-                            'net_amount'                    => $transactions->net_amount
+                            'net_amount'                    => $transactions->net_amount,
+                            'amount_to_pay_initial'         => $amount_to_pay_initial,
+                            'service_charge'                => $transactions->book->service_charge_renew,
+                            'percent_interest'              => $percent_interest
                             ])
                     </div>
                     @endif

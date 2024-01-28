@@ -1,5 +1,5 @@
 <div class="modal fade interest-payment-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
         <form action="{{ route('transaction_payments.update', $payment_transaction_id_last) }}" method="POST">
             @csrf
             <input type="hidden" name="transaction_id" value="{{ $transaction_id }}">
@@ -8,7 +8,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Payment | Id: {{ $payment_transaction_id_last }} | Net Amount: {{ $net_amount }} | Date: {{ date('Y-m-d H:i:s') }}</h4>
+                    <h4 class="modal-title" id="myModalLabel">Payment | Id: {{ $payment_transaction_id_last }} | Net Amount: {{ $net_amount }} | Date: {{ date('Y-m-d H:i:s') }} | {{$amount_to_pay_initial}}</h4>
                     <button type="button" class="close" id="closeModalPayment" data-dismiss="modal"><span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -28,8 +28,7 @@
                         </div>
                     </div>
                     <div class="row">
-
-						<div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
                                     Less Charge
@@ -38,7 +37,6 @@
                                     <input type="text" class="form-control" id="less_charge_amount" name="less_charge_amount" autocomplete="off">
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
                                     Partial Amount
@@ -47,14 +45,13 @@
                                     <input type="text" class="form-control" id="less_partial_amount" name="less_partial_amount" autocomplete="off">
                                 </div>
                             </div>
-						</div>
-                        <div class="col-lg-6">
+
 							<div class="form-group row">
                                 <label class="col-form-label col-md-5 label-align">
                                     Percent Interest
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="percent_interest" autocomplete="off" readonly>
+                                    <input type="text" class="form-control" name="percent_interest" value="{{ $percent_interest }}" autocomplete="off" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -62,7 +59,7 @@
                                     Percent Amount
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" id="add_percent_amount" name="add_percent_amount" autocomplete="off" readonly>
+                                    <input type="text" class="form-control" id="add_percent_amount" name="add_percent_amount" value="{{ $amount_to_pay_initial }}" autocomplete="off" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -86,7 +83,7 @@
                                     Service Charge
                                 </label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" id="add_service_charge" name="add_service_charge" autocomplete="off" readonly>
+                                    <input type="text" class="form-control" id="add_service_charge" name="add_service_charge" value="{{ $service_charge }}" autocomplete="off" readonly>
                                 </div>
                             </div>
 
@@ -103,20 +100,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 label-align">O.R. Number</label>
-                                <div class="col-md-10">
+                                <label class="col-form-label col-md-5 label-align">O.R</label>
+                                <div class="col-md-7">
                                     <input type="text" class="form-control" name="ornumber" autocomplete="off" id="ornumber">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 label-align">Details</label>
-                                <div class="col-md-10">
+                                <label class="col-form-label col-md-5 label-align">Details</label>
+                                <div class="col-md-7">
                                     <input type="text" class="form-control" name="details" autocomplete="off" id="remarks" value="">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-2 label-align">End Date</label>
-                                <div class="col-md-10">
+                                <label class="col-form-label col-md-5 label-align">End Date</label>
+                                <div class="col-md-7">
                                     <input type="date" class="form-control" name="payment_enddate" autocomplete="off" value="{{ date('Y-m-d') }}" readonly>
                                 </div>
                             </div>

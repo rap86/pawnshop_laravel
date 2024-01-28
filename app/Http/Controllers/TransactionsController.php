@@ -79,7 +79,7 @@ class TransactionsController extends Controller
         ->where($where)
         ->get();
 
-       // dd($transactions);
+       //dd($transactions);
 
         return $transactions = $this->formatDateDiff($transactions);
     }
@@ -301,7 +301,7 @@ class TransactionsController extends Controller
 		->where('id', $id)
 		->get();
 
-        // dd($transactions);
+        //dd($transactions);
 
         $transactions = $this->formatDateDiff($transactions);
         return view('transactions.show', [

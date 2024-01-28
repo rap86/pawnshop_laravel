@@ -768,17 +768,6 @@ $(document).ready(function () {
     */
 
 
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Payment Interest Modal Start
     */
@@ -844,6 +833,11 @@ $(document).ready(function () {
             totalPaymentRenewOrRedeem(add_principal_amount);
         }
 
+        if(status == 'renewed') {
+
+            totalPaymentRenewOrRedeem(0);
+        }
+
         if(status == '') {
 
           totalPaymentRenewOrRedeem(0);
@@ -874,11 +868,15 @@ $(document).ready(function () {
     */
     function makeValueEmpty() {
 
+       /*
+
       $('input#less_charge_amount').val('');
       $('input#less_partial_amount').val('');
       $('input#add_percent_amount').val('');
       $('input#add_charge_amount').val('');
       $('input#add_service_charge').val('');
+
+      */
       $('input#total_amount').val('');
     }
 
