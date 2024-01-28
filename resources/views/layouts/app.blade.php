@@ -65,6 +65,12 @@
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
+        <a href="{{ route('transactions.dashboard') }}" class="nav-link">
+            <i class="fas fa-user"></i>
+            User's count : {{session('count')}}
+        </a>
+        </li>
+        <li class="nav-item">
           <a href="{{ route('transactions.dashboard') }}" class="nav-link">
             <i class="fas fa-chart-pie"></i>
             Dashboard

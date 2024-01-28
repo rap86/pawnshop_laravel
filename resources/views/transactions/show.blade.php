@@ -206,7 +206,7 @@
                                                         <td class="text-center">
                                                             @if(auth()->user()->role == "admin")
                                                                 @if($valuePayments->status == "granted")
-                                                                    <div class="btn btn-danger" data-toggle="modal" data-target=".editpt-example-modal-lg{{ $valuePayments->id }}">Edit PT#: {{ $valuePayments->ptnumber }}</div>
+                                                                    <div class="btn btn-danger" data-toggle="modal" data-target=".editpt-example-modal-lg{{ $valuePayments->id }}">Edit : {{ $valuePayments->ptnumber }}</div>
                                                                     @include('inc.modal_edit_ptnumber', [
                                                                         'id'                => $valuePayments->id,
                                                                         'ptnumber'          => $valuePayments->ptnumber

@@ -40,7 +40,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#granted" data-toggle="tab">
                             Granted
-                            <?php 
+                            <?php
                                 if(isset($grantedArr))
                                 {
                                     echo " (".count($grantedArr).")";
@@ -51,7 +51,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#ua" data-toggle="tab">
                             UA
-                            <?php 
+                            <?php
                                 if(isset($uainArr))
                                 {
                                     echo " (".count($uainArr).")";
@@ -62,7 +62,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#uat" data-toggle="tab">
                             UAT
-                            <?php 
+                            <?php
                                 if(isset($uaoutArr))
                                 {
                                     echo " (".count($uaoutArr).")";
@@ -73,7 +73,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#redeemed" data-toggle="tab">
                             Redeemed
-                            <?php 
+                            <?php
                                 if(isset($redeemedArr))
                                 {
                                     echo " (".count($redeemedArr).")";
@@ -84,7 +84,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#summary" data-toggle="tab">
                             Summary
-                            <?php 
+                            <?php
                                 if(isset($customer_transactions[0]->transactions))
                                 {
                                     echo " (".count($customer_transactions[0]->transactions).")";
@@ -101,40 +101,48 @@
                         @include('inc.customer_info', ['customer'=> $customer_transactions[0], 'clickable' => 'true'])
                     </div>
                     <div class="tab-pane fade" id="granted" role="tabpanel" aria-labelledby="granted-tab">
-                        @if(isset($grantedArr))
-                            
-                            @foreach($grantedArr as $keyG => $valueG)
-                                @include('inc.transaction_header', ['transactions' => $valueG])
-                            @endforeach
+                        <div class="row">
+                            @if(isset($grantedArr))
 
-                        @endif
+                                @foreach($grantedArr as $keyG => $valueG)
+                                    @include('inc.transaction_header', ['transactions' => $valueG])
+                                @endforeach
+
+                            @endif
+                        </div>
                     </div>
                     <div class="tab-pane" id="ua">
-                        @if(isset($uainArr))
-                            
-                            @foreach($uainArr as $keyG => $valueG)
-                                @include('inc.transaction_header', ['transactions' => $valueG])
-                            @endforeach
+                        <div class="row">
+                            @if(isset($uainArr))
 
-                        @endif
+                                @foreach($uainArr as $keyG => $valueG)
+                                    @include('inc.transaction_header', ['transactions' => $valueG])
+                                @endforeach
+
+                            @endif
+                        </div>
                     </div>
                     <div class="tab-pane" id="uat">
-                        @if(isset($uaoutArr))
-                            
-                            @foreach($uaoutArr as $keyG => $valueG)
-                                @include('inc.transaction_header', ['transactions' => $valueG])
-                            @endforeach
+                        <div class="row">
+                            @if(isset($uaoutArr))
 
-                        @endif
+                                @foreach($uaoutArr as $keyG => $valueG)
+                                    @include('inc.transaction_header', ['transactions' => $valueG])
+                                @endforeach
+
+                            @endif
+                        </div>
                     </div>
                     <div class="tab-pane" id="redeemed">
-                        @if(isset($redeemedArr))
-                            
-                            @foreach($redeemedArr as $keyG => $valueG)
-                                @include('inc.transaction_header', ['transactions' => $valueG])
-                            @endforeach
+                        <div class="row">
+                            @if(isset($redeemedArr))
 
-                        @endif
+                                @foreach($redeemedArr as $keyG => $valueG)
+                                    @include('inc.transaction_header', ['transactions' => $valueG])
+                                @endforeach
+
+                            @endif
+                        </div>
                     </div>
                     <div class="tab-pane" id="summary">
                         <div class="col-md-12 col-lg-12 pb-3">
@@ -151,7 +159,7 @@
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
-                                    </thead> 
+                                    </thead>
                                     <tbody>
                                         @foreach($customer_transactions[0]->transactions as $keyG => $valueG)
                                             <tr>
@@ -166,7 +174,7 @@
                                                 <td>
                                                     @foreach($valueG->transaction_items as $keyItem => $valueItem)
                                                         <i class="fa fa-circle text-danger" style="font-size: 12px;"></i>
-                                                        {{ $valueItem->item_name }} &emsp; 
+                                                        {{ $valueItem->item_name }} &emsp;
                                                     @endforeach
                                                 </td>
                                                 <td>{{ date('Y-m-d', strtotime($valueG->created_at)) }}</td>

@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class TransactionPaymentDetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +13,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-
-        $count = $users->count();
-        session(['count' =>  $count]);
-        return view('auth.index', [
-            'users' => $users,
-            'count' => $count
-        ]);
-
+        //
     }
 
     /**
@@ -54,10 +45,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return view('auth.show', [
-            'user' => $user
-        ]);
+        //
     }
 
     /**
@@ -68,10 +56,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('auth.edit', [
-            'user' => $user
-        ]);
+        //
     }
 
     /**
@@ -83,14 +68,7 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        User::whereId($user->id)->update([
-            'name' => $request->input('name'),
-            'username' => $request->input('username'),
-            'role' => $request->input('role'),
-            'password' => Hash::make($request->input('password'))
-        ]);
-        return redirect()->route('users.index')->with('flash_success', 'The user has been updated.');
+        //
     }
 
     /**

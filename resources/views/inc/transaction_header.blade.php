@@ -95,8 +95,13 @@
     </table>
     <table class="table table-striped border-bottom border-left border-right">
         <tr>
-            <th class="bg-green">Amount to pay for Renew</th>
-            <th class="bg-blue">Amount to pay for Redeem</th>
+            <th>
+                <div class="btn btn-block btn-success" data-toggle="modal" data-target=".renew-redeem-modal-lg">Amount to pay for Renew</div>
+                @include('inc.modal_payment_test')
+            </th>
+            <th>
+                <div class="btn btn-block btn-primary" data-toggle="modal" data-target=".renew-redeem-modal-lg">Amount to pay for Redeem</div>
+            </th>
         </tr>
         <tr>
             <td>100x</td>
