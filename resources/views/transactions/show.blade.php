@@ -175,7 +175,7 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="table-responsive">
-                                    @if(count($transactions->transaction_payments) > 0)
+                                    @if(isset($transactions->transaction_payments))
                                         <table class="dataTablesx table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -198,6 +198,9 @@
 
                                                 @foreach($transactions->transaction_payments as $keyPayments => $valuePayments)
 
+                                                    <!--
+                                                    May may PT Number ma, saka pa lang lalabas ang button "Renew / Tubos"
+                                                    -->
                                                     @php
                                                         $payment_transaction_id_last = $valuePayments->id;
                                                     @endphp
@@ -325,27 +328,32 @@
                                 </thead>
                                 <tbody>
 
-                                    @php
-                                        $Year  = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['year'];
-                                        $Month = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['month'];
-                                        $Day   = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['day'];
-                                    @endphp
 
                                     @foreach($transactions->book->book_interests as $keyBookInterest => $valueBookInterest)
 
-                                        @php
-                                            $amount_to_pay_initial  = round(($valueBookInterest->percent_interest / 100) * $transactions->net_amount, 0);
-                                            $amount_to_pay_full     = $amount_to_pay_initial + $transactions->book->service_charge_renew;
-
-                                        @endphp
-
-
-                                        @if ($valueBookInterest->month == $Month )
+                                        <!--This is for monthly computation for renew and redeem-->
+                                        @isset($transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days)
                                             @php
-                                                $percent_interest = $valueBookInterest->month;
+                                                $Year  = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['year'];
+                                                $Month = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['month'];
+                                                $Day   = $transactions->transaction_payments[ count($transactions->transaction_payments) -1 ]->diff_days['date']['day'];
+
+                                                $amount_to_pay_initial  = round(($valueBookInterest->percent_interest / 100) * $transactions->net_amount, 0);
+                                                $amount_to_pay_full     = $amount_to_pay_initial + $transactions->book->service_charge_renew;
+
                                             @endphp
-                                            {{ $amount_to_pay_full}}
-                                        @endif
+
+                                            @if ($valueBookInterest->month == $Month )
+                                                @php
+                                                    $percent_interest = $valueBookInterest->month;
+                                                @endphp
+                                            @else
+                                                @php
+                                                    $percent_interest = 0;
+                                                @endphp
+                                            @endif
+
+                                        @endisset
 
                                         <tr>
                                             <td>{{ $valueBookInterest->book_id}}</td>

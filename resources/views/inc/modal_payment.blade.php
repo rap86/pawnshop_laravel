@@ -8,7 +8,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Payment | Id: {{ $payment_transaction_id_last }} | Net Amount: {{ $net_amount }} | Date: {{ date('Y-m-d H:i:s') }} | {{$amount_to_pay_initial}}</h4>
+                    <h4 class="modal-title" id="myModalLabel">Payment</h4>
                     <button type="button" class="close" id="closeModalPayment" data-dismiss="modal"><span aria-hidden="true">×</span>
                     </button>
                 </div>

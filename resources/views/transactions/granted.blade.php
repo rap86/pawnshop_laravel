@@ -53,7 +53,7 @@ foreach ($transactions as $keyT => $valueT) {
                             @endif
                         </a>
                     </li>
-                    
+
                     @if($nopttab == "visible")
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#b4">NO PT #
@@ -97,7 +97,8 @@ foreach ($transactions as $keyT => $valueT) {
                                         <table id="" class="dataTables table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                             <thead>
                                                 <tr>
-                                                    <th class="column-title">Name</th>
+                                                    <th class="column-title">Customer's name</th>
+                                                    <th class="column-title">ID</th>
                                                     <th class="column-title">Book</th>
                                                     <th class="column-title">D Granted</th>
                                                     <th class="column-title">Item</th>
@@ -108,13 +109,14 @@ foreach ($transactions as $keyT => $valueT) {
                                             </thead>
                                             <tbody>
                                                 @foreach($nopt as $keyN => $valueN)
-                                                
+
                                                     <tr>
                                                         <td style="text-transform: capitalize;">
                                                             {{ $valueN->customer->first_name }}
                                                             {{ $valueN->customer->middle_name }}
                                                             {{ $valueN->customer->last_name }}
-                                                        <td>{{  $valueN->book_id }}</td>    
+                                                        <td>{{  $valueN->id }}</td>
+                                                        <td>{{  $valueN->book_id }}</td>
                                                         </td>
                                                         <td>{{ date('M j, Y',strtotime($valueN->created_at)) }}</td>
                                                         <td>{{ $valueN->item->name }}</td>

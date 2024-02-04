@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('book_id');
             $table->unsignedInteger('month');
             $table->unsignedInteger('percent_interest');
+            $table->unsignedInteger('allowance_day_for_interest');
             $table->unsignedInteger('display_order');
             $table->string('details', 255);
             $table->timestamps();
